@@ -1,0 +1,29 @@
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    color: #333;
+    line-height: 1.6;
+    background-color: #fff;
+}
+
+.about-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #222;
+    text-align: center;
+}
+
+.about-container h2 {
+    margin-top: 2rem;
+    color: #444;
+}
+
+.about-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.about-container a:hover {
+    text-decoration: underline;
+}

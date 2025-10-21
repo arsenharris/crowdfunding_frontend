@@ -1,0 +1,35 @@
+/* src/pages/HomePage.css */
+
+.home-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.home-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+#fundraiser-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.fundraiser-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    background-color: #fff;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.fundraiser-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
