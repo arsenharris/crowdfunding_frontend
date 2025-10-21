@@ -9,11 +9,11 @@ async function postFundraiser(title, description, goal, image, genre_type) {
             "Authorization": `Token ${token}`
         },
         body: JSON.stringify({
-            "title": fundraiser.title,
-            "description": fundraiser.description,
-            "goal": fundraiser.goal,
-            "image": fundraiser.image,
-            "genre_type": fundraiser.genre_type,
+            "title":title,
+            "description": description,
+            "goal": goal,
+            "image": image,
+            "genre_type": genre_type,
             "is_open": true
         }),
     });

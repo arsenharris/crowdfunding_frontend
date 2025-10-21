@@ -1,10 +1,20 @@
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import useFundraiser from "../hooks/use-fundraiser";
+import postLike from "../api/like-fundraiser";
+import postComment from "../api/comment-fundraiser";
+
 import "./FundraiserPage.css";
+import { ThumbsUp } from "lucide-react";
 
 function FundraiserPage() {
     const { id } = useParams();
-    const { fundraiser, isLoading, error } = useFundraiser(id);    
+    const [likes, setLikes] = useState(0);
+    const { fundraiser, isLoading, error } = useFundraiser(id);   
+    const incrementLikes = () => {
+        if (likes >= 1) { alert ("You have already liked this fundraiser!"); return; }        
+        setLikes(likes + 1);
+    } 
     if (isLoading) {
         return (<p>loading...</p>)}
     if (error) {    
@@ -26,6 +36,13 @@ function FundraiserPage() {
 
             <h3>Pledges:</h3>
 
+            
+            <button onClick={() => incrementLikes()}><ThumbsUp /></button>
+            <span>{likes} Likes</span>
+
+            <textarea id="comment" placeholder="Leave a comment..."></textarea> 
+            <button>Submit Comment</button>
+
             <ul>
                 {fundraiser.pledges.map((pledgeData, key) => {
                     return (
@@ -35,8 +52,7 @@ function FundraiserPage() {
                     );   
                 })}
             </ul>
-            <p><strong>Comment:</strong> {fundraiser.Comment}</p>
-            <p><strong>Like</strong> {fundraiser.Like}</p>
+            
             
                 
 
