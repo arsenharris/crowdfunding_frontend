@@ -3,17 +3,26 @@ import { useState } from "react";
 import useFundraiser from "../hooks/use-fundraiser";
 import postLike from "../api/like-fundraiser";
 import postComment from "../api/comment-fundraiser";
-
 import "./FundraiserPage.css";
 import { ThumbsUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 function FundraiserPage() {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [likes, setLikes] = useState(0);
+
     const { fundraiser, isLoading, error } = useFundraiser(id);   
+
+
     const incrementLikes = () => {
         if (likes >= 1) { alert ("You have already liked this fundraiser!"); return; }        
         setLikes(likes + 1);
+
+    const progress = fundraiser.goal ? (fundraiser.pledges.reduce((sum, p) => sum + p.amount, 0) / fundraiser.goal) * 100 : 0;
+
+
     } 
     if (isLoading) {
         return (<p>loading...</p>)}
@@ -53,11 +62,16 @@ function FundraiserPage() {
                 })}
             </ul>
             
-            
+            <div>
+                <label>Progress:</label>
+
+            </div>
                 
 
             <p><strong>Owner:</strong> {fundraiser.owner?.username}</p>
-
+            <button onClick={() => navigate("/")} className="back-button">
+                ← Back to Home
+            </button>
             </div>
         </div>
     );
