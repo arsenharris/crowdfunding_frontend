@@ -65,3 +65,37 @@ progress {
     width: 100%;
     height: 20px;
 }
+
+
+/* Progress bar */
+.progress-container {
+    margin: 16px 0;
+    background: #eef2f5;
+    border-radius: 8px;
+    padding: 6px;
+    position: relative;
+}
+
+.progress-bar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    background: linear-gradient(90deg, #4f46e5, #06b6d4);
+    color: white;
+    border-radius: 6px;
+    transition: width 350ms ease;
+    font-weight: 600;
+    min-width: 40px;
+}
+
+.progress-label {
+    padding: 0 8px;
+    font-size: 0.9rem;
+}
+
+.progress-meta {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #374151;
+}

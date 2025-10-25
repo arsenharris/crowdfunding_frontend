@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postLogin from "../api/post-login";
-
+import "./LoginForm.css";
 function LoginForm() {
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({

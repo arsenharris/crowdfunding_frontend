@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import createUser from "../api/create-user";
+import "./RegisterForm.css";
 
 function RegisterForm() {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ function RegisterForm() {
                 credentials.password
             ).then((response) => {
             console.log(response)
-            // navigate("/");
+            navigate("/");
         });
         }
     };
