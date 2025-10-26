@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useFundraiser from "../hooks/use-fundraiser";
 import postLike from "../api/like-fundraiser";
 import postComment from "../api/comment-fundraiser";
@@ -14,8 +14,15 @@ function FundraiserPage() {
     const { id } = useParams();
     const [likes, setLikes] = useState(0);
     const [commentText, setCommentText] = useState("");
+    const [comments, setComments] = useState([]);
     const { fundraiser, isLoading, error } = useFundraiser(id); 
     
+
+    useEffect(() => {
+        if (fundraiser?.comments) {
+            setComments(fundraiser.comments);
+        }
+    }, [fundraiser]);
 
 
     ///////// Likes /////////
@@ -42,10 +49,11 @@ function FundraiserPage() {
     const handleCommentSubmit = async () => {
         if (!commentText.trim()) return;
         try {
-            await postComment(id, commentText );
+            const newComment = await postComment(id, commentText);
+            setComments((prev) => [newComment, ...prev]); // Add new comment instantly
             setCommentText("");
             // simple refresh to see new comments / pledges if backend returns them
-            window.location.reload();
+            // window.location.reload();
         } catch (err) {
             console.error("Failed to post comment:", err);
             alert("Could not post comment. " + (err.message || ""));
@@ -98,10 +106,32 @@ function FundraiserPage() {
                 <button onClick={() => incrementLikes()}><ThumbsUp /></button>
                 <span>{likes} Likes</span>
                 {/* Comments */}
-                <div> 
-                <textarea id="comment" placeholder="Leave a comment..." value={commentText} onChange={handleCommentChange}></textarea> 
-                <button onClick={handleCommentSubmit}>Submit Comment</button>
-                </div>
+                <div className="comments-section">
+                    <h3>Comments</h3>
+                    <div>
+                        <textarea
+                            placeholder="Write your comment here..."
+                            value={commentText}
+                            onChange={handleCommentChange}
+                        ></textarea>
+                        <button onClick={handleCommentSubmit} className="comment-submit-button">
+                            Submit Comment
+                        </button>
+                    </div>
+                    {comments.length === 0 ? (
+                        <p>No comments yet. Be the first to comment!</p>
+                    ) : (
+                    <ul className="comment-list">
+                        {comments.map((c) => (
+                            <li key={c.id} className="comment-item">
+                                <strong> {c.user?.username}</strong>: {c.text}
+                                <br />
+                                <small>{new Date(c.date_created).toLocaleString()}</small>
+                            </li>       
+                        ))}
+                    </ul>
+                    )}
+                </div>    
                 {/* Progress bar */}
                 <div className="progress-container" aria-labelledby="progress-heading">
                     <h4 id="progress-heading" className="visually-hidden">Fundraiser progress</h4>
