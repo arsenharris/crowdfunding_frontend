@@ -1,7 +1,7 @@
 
 async function postPledges(fundraiserId, amount, comment, anonymous) {
     const token = window.localStorage.getItem("token");
-    const url = `${import.meta.env.VITE_API_URL}/fundraisers/${fundraiserId}/pledges/`;
+    const url = `${import.meta.env.VITE_API_URL}/fundraisers/${fundraiserId}/pledges`;
     const response = await fetch(url, {
         method: "POST", // We need to tell the server that we are sending JSON data so we set the Content-Type header to application/json
         headers: {
@@ -9,9 +9,11 @@ async function postPledges(fundraiserId, amount, comment, anonymous) {
             "Authorization": `Token ${token}`
         },
         body: JSON.stringify({
+            "tier_level": null,
             "amount": amount,
             "comment": comment,
             "anonymous": anonymous,
+            fundraiser: fundraiserId
         }),
     });
 

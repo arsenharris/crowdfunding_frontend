@@ -160,36 +160,93 @@
 }
 
 /* Progress bar */
-.progress-section, .pledges-section, .pledge-form-section {
+.progress-section {
     border-top: 1px solid #eee;
     padding-top: 16px;
 }
-.progress-container{
-    margin:16px 0;
-    background:#eef2f5;
-    border-radius:12px;
-    padding:8px;
-    position:relative;
+.progress-container {
+    --progress-height: 20px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0.6rem 0 1rem;
+    background: #eef4f8; /* track color */
+    border-radius: 9px;
+    padding: 3px; /* gives a small inset */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
 }
-.progress-bar{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    height:36px;
-    background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
-    color:white;
-    border-radius:999px;
-    transition:width .35s ease;
-    font-weight:700;
-    padding:0 12px;
-    min-width:48px;
-    box-shadow:0 8px 24px rgba(79,70,229,0.12);
+.progress-bar {
+    /* this element is the colored fill; width controlled inline by your JSX */
+    height: var(--progress-height);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    line-height: 1;
+    border-radius: 999px; /* keep fill rounded */
+    transition: width 700ms cubic-bezier(.2,.9,.2,1), background 300ms ease;
+    min-width: 36px; /* ensures label has space when very small */
+    background: linear-gradient(90deg, #2563eb 0%, #06b6d4 100%); /* blue -> teal */
+    position: relative;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.18);
+    overflow: visible;
 }
-.progress-label{ padding:0 8px; font-size:0.95rem; }
-.progress-meta{
-    margin-top:8px;
-    font-size:0.9rem;
-    color:var(--muted);
+/* Animated diagonal stripes for motion (subtle) */
+.progress-bar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.06) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.06) 75%, transparent 75%, transparent);
+    background-size: 24px 24px;
+    opacity: .6;
+    pointer-events: none;
+    animation: stripeMove 3s linear infinite;
+    mix-blend-mode: overlay;
+    border-radius: inherit;
+}
+/* When goal reached (exact 100), darker green */
+.progress-bar[aria-valuenow="100"] {
+    background: linear-gradient(90deg, #16a34a 0%, #4ade80 100%);
+    box-shadow: 0 0 0 4px rgba(34,197,94,0.06);
+}
+
+/* Make the percent label readable when fill is narrow by allowing it to overflow into the track padding */
+.progress-label {
+    display: inline-block;
+    padding: 0 6px;
+    white-space: nowrap;
+}
+
+/* Meta line below */
+.progress-meta {
+    margin-top: 0.45rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-size: 0.9rem;
+    color: #374151;
+}
+
+.progress-meta small {
+    display: block;
+}
+
+/* Small-screen adjustments */
+@media (max-width: 420px) {
+    .progress-container { max-width: 100%; }
+    .progress-bar { min-width: 28px; padding-right: 8px; }
+    .progress-label { font-size: 0.78rem; }
+}
+
+/* Keyframes */
+@keyframes stripeMove {
+    from { background-position: 0 0; }
+    to { background-position: 48px 0; }
 }
 
 /* ===== Pledges list (your JSX uses .pledges-section .pledges-list .pledge-item) ===== */

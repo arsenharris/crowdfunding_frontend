@@ -16,7 +16,7 @@ function FundraiserPage() {
     const [commentText, setCommentText] = useState("");
     const [comments, setComments] = useState([]);
     const { fundraiser, isLoading, error } = useFundraiser(id); 
-    
+    const [showPledgeForm, setShowPledgeForm] = useState(false);
 
     useEffect(() => {
         if (fundraiser?.comments) {
@@ -105,6 +105,21 @@ function FundraiserPage() {
                 <h3>{`Status: ${fundraiser.is_open}`}</h3>
                 {/* Owner */}
                 <p><strong>Owner:</strong> {fundraiser.owner?.username}</p>
+                {/* Progress bar */}
+                <div className="progress-container" aria-labelledby="progress-heading">
+                    <h4 id="progress-heading" className="visually-hidden">Fundraiser progress</h4>
+                    <div
+                        className="progress-bar"
+                        role="progressbar"
+                        aria-valuenow={progressPercent}
+                        style={{ width: `${progressPercent}%` }}
+                    >
+                        <span className="progress-label">{progressPercent}%</span>
+                    </div>
+                    <div className="progress-meta">
+                        <small>${totalPledged} of ${fundraiser?.goal ?? 0} goal</small>
+                    </div>
+                </div>   
                 </div>
                 </div>
 
@@ -141,27 +156,13 @@ function FundraiserPage() {
                     </ul>
                     )}
                 </div>    
-                {/* Progress bar */}
-                <div className="progress-container" aria-labelledby="progress-heading">
-                    <h4 id="progress-heading" className="visually-hidden">Fundraiser progress</h4>
-                    <div
-                        className="progress-bar"
-                        role="progressbar"
-                        aria-valuenow={progressPercent}
-                        style={{ width: `${progressPercent}%` }}
-                    >
-                        <span className="progress-label">{progressPercent}%</span>
-                    </div>
-                    <div className="progress-meta">
-                        <small>${totalPledged} of ${fundraiser?.goal ?? 0} goal</small>
-                    </div>
-                </div>                
+
                 {/* Pledges */}
                 <section className="pledges-section" aria-labelledby="pledges-heading">
                     <h3 id="pledges-heading">Pledges</h3>
                     <p><strong>Count:</strong> {pledgesCount}</p>
                     <p><strong>Total pledged:</strong> ${totalPledged}</p>
-                    {/* List of individual pledges (safe map over empty array) */}
+                {/* List of individual pledges (safe map over empty array) */}
                     <ul className="pledges-list">
                         {pledges.map((pledge) => (
                             <li
@@ -172,12 +173,31 @@ function FundraiserPage() {
                             </li>
                         ))}
                     </ul>
-                </section>          
+                </section>  
+
                 {/* Render the pledge form so users can submit pledges */}
-                <div > <h3>Make a Pledge</h3> <PledgeForm fundraiserId={id} /> </div>
-                
+                <div className="make-pledge-area">
+                {!showPledgeForm ? (
+                        <button className="open-pledge-button" onClick={() => setShowPledgeForm(true)}>
+                            Make a Pledge
+                        </button>
+                    ) : (
+                        <div className="pledge-form-wrapper">
+                            <h3>Make a Pledge</h3>
+                            <PledgeForm
+                                fundraiserId={id}
+                                onSuccess={() => {
+                                    setShowPledgeForm(false);
+                                    window.location.reload();
+                                }}
+                                onCancel={() => setShowPledgeForm(false)}
+                            />
+                        </div>
+                    )}
+                </div>
+
+
                 {/* Back to home button */}
-                <button onClick={() => navigate("/")} className="back-button"> ← Back to Home </button>
                 </div>
             </div>
         </div>
