@@ -42,12 +42,13 @@ function FundraiserPage() {
     const handleCommentSubmit = async () => {
         if (!commentText.trim()) return;
         try {
-            await postComment(id, { message: commentText });
+            await postComment(id, commentText );
             setCommentText("");
             // simple refresh to see new comments / pledges if backend returns them
             window.location.reload();
         } catch (err) {
             console.error("Failed to post comment:", err);
+            alert("Could not post comment. " + (err.message || ""));
         }
     };  
 
