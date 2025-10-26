@@ -84,10 +84,13 @@ function FundraiserPage() {
 
     return (
         <div className="fundraiser-page">
-            <div className="fundraiser-image"> <img src={fundraiser.image} alt={fundraiser.title} /> </div>
             <div className="fundraiser-details"> 
+
+                <div className="top-side"> 
+                <div className="fundraiser-image"> <img src={fundraiser.image} alt={fundraiser.title} /> </div>
+                <div className="right-side"> 
                 {/* Title */}
-                <h1>{fundraiser.title}</h1>
+                <div className="image-title"><h1>{fundraiser.title}</h1></div>
                 {/* Genre */}
                 <p><strong>Genre:</strong> {fundraiser.genre_type}</p>
                 {/* Goal */}
@@ -102,9 +105,15 @@ function FundraiserPage() {
                 <h3>{`Status: ${fundraiser.is_open}`}</h3>
                 {/* Owner */}
                 <p><strong>Owner:</strong> {fundraiser.owner?.username}</p>
+                </div>
+                </div>
+
+                <div className="bottom-side">
                 {/* Likes */}
-                <button onClick={() => incrementLikes()}><ThumbsUp /></button>
-                <span>{likes} Likes</span>
+                <div className ="image-likes"> 
+                <button className="like-button"onClick={() => incrementLikes()}><ThumbsUp /></button>
+                <span className="likes-count">{likes} Likes</span>
+                </div>
                 {/* Comments */}
                 <div className="comments-section">
                     <h3>Comments</h3>
@@ -169,6 +178,7 @@ function FundraiserPage() {
                 
                 {/* Back to home button */}
                 <button onClick={() => navigate("/")} className="back-button"> ← Back to Home </button>
+                </div>
             </div>
         </div>
     );

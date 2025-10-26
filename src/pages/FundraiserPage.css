@@ -1,159 +1,269 @@
-.fundraiser-page {
+/* page layout */
+    .fundraiser-page {
     display: flex;
-    gap: 30px;
-    margin: 20px;
-    flex-wrap: wrap;
+    flex-direction: column; /* stack image, details, bottom */
+    gap: 24px;
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 16px;
 }
 
-.fundraiser-image img {
-    width: 500px;
-    height: 350px;
-    object-fit: cover;
-    border-radius: 10px;
+
+/* image column */
+.fundraiser-image{
+    position:relative;
+    flex: 0 0 auto;
+    width: 100%;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:var(--shadow-1);
+    background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.01));
+}
+.fundraiser-image img{
+    width:100%;
+    height:auto;
+    max-height:420px; /* increase for a bigger image on small screens */
+    object-fit:cover;
+    object-position:0% 50%;
+    display:block;
+    transition:transform .3s ease;
+}
+.fundraiser-image img:hover{ transform:scale(1.02); }
+
+/* ===== Title overlay (your JSX places <h1> inside .image-title) ===== */
+.image-title{
+    position:absolute;
+    left:120px;
+    right:12px;
+    top: calc(var(--navbar-height, 64px) + 12px);
+    padding:10px 20px;
+    background: transparent; /* no background color */
+    color: var(--title-color, #000); /* configurable text color */
+    font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+}
+.image-title h1{
+    margin:0;
+    font-size:1.25rem; /* slightly larger title */
+    font-weight:900;
+    line-height:1.05;
+    font-family:inherit;
+    letter-spacing:-0.02em;
 }
 
-.fundraiser-details {
-    flex: 1;
-    min-width: 300px;
+/* ===== Details column (right) ===== */
+.fundraiser-details{
+    flex:1 1 420px;
+    min-width:300px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+/* Generic paragraphs in the details column (genre, goal, description, owner) */
+.fundraiser-details p{
+    margin:0;
+    color:var(--muted);
+    line-height:1.45;
+    font-size:0.98rem;
+}
+.fundraiser-details p strong{ color:#0f172a; font-weight:700; }
+
+/* created / end-date / status headings */
+.fundraiser-details h3{
+    margin:6px 0;
+    color:#0f172a;
+    font-weight:700;
+    font-size:1rem;
+}
+/* top side */
+
+.top-side{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    align-items:stretch;
 }
 
-.fundraiser-details h1 {
-    margin-bottom: 10px;
+/* right side */
+.right-side{
+    flex:1 1 auto;
+    padding: 8px 0 0 0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+}
+/* Bottom side */
+.bottom-side {
+    width: 100%; /* full width under the image */
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+@media (min-width: 700px) {
+    .top-side{
+        flex-direction:row;
+        align-items:flex-start;
+        gap:24px;
+    }
+
+    .fundraiser-image{
+        flex: 0 0 380px; /* a bit wider image column */
+        width: auto;
+    }
+
+    .fundraiser-image img{
+        max-height:340px; /* correspondingly larger */
+    }
+
+    .right-side{
+        padding-left:18px;
+        flex: 1 1 520px; /* give the right-side a bit more room */
+    }
+
+    /* ensure bottom-side still spans full width under both columns */
+    .bottom-side {
+        width: 100%;
+    }
 }
 
-.fundraiser-progress {
+/* image likes */
+.image-likes {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 10px 0;
+    gap: 12px;
 }
 
-.fundraiser-progress progress {
-    width: 200px;
-    height: 20px;
+.like-button:hover{ filter:brightness(0.95); }
+
+.likes-count{
+    font-weight:700;
+    color:var(--muted);
 }
 
-.fundraiser-details ul {
-    padding-left: 20px;
-    margin-top: 5px;
-}
-
-.fundraiser-details li {
-    margin-bottom: 8px;
-    background: #f7f7f7;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
+/* back button (keeps your class) */
 .back-button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 6px;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    border-radius: 8px;
     cursor: pointer;
 }
 .back-button:hover {
-    background-color: #555;
+    background: #f0f0f0;
 }
-
-
-.fundraiser-progress {
-    margin-top: 1rem;
+.fundraiser-details h1 {
+    margin: 0 0 10px 0; /* remove default top margin so title aligns with image top */
 }
-progress {
-    width: 100%;
-    height: 20px;
-}
-
 
 /* Progress bar */
-.progress-container {
-    margin: 16px 0;
-    background: #eef2f5;
-    border-radius: 8px;
-    padding: 6px;
-    position: relative;
+.progress-section, .pledges-section, .pledge-form-section {
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+}
+.progress-container{
+    margin:16px 0;
+    background:#eef2f5;
+    border-radius:12px;
+    padding:8px;
+    position:relative;
+}
+.progress-bar{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:36px;
+    background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+    color:white;
+    border-radius:999px;
+    transition:width .35s ease;
+    font-weight:700;
+    padding:0 12px;
+    min-width:48px;
+    box-shadow:0 8px 24px rgba(79,70,229,0.12);
+}
+.progress-label{ padding:0 8px; font-size:0.95rem; }
+.progress-meta{
+    margin-top:8px;
+    font-size:0.9rem;
+    color:var(--muted);
 }
 
-.progress-bar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 28px;
-    background: linear-gradient(90deg, #4f46e5, #06b6d4);
-    color: white;
-    border-radius: 6px;
-    transition: width 350ms ease;
-    font-weight: 600;
-    min-width: 40px;
-}
-
-.progress-label {
-    padding: 0 8px;
-    font-size: 0.9rem;
-}
-
-.progress-meta {
-    margin-top: 6px;
-    font-size: 0.85rem;
-    color: #374151;
+/* ===== Pledges list (your JSX uses .pledges-section .pledges-list .pledge-item) ===== */
+.pledges-section{ margin-top:10px; }
+.pledges-list{ list-style:none; padding:0; margin:8px 0 0 0; display:flex; flex-direction:column; gap:8px; }
+.pledge-item{
+    background:#fff;
+    border:1px solid rgba(15,23,42,0.04);
+    padding:10px;
+    border-radius:8px;
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    align-items:center;
+    font-weight:600;
 }
 
 
 
 /* Comments Section */
-.comments-section {
-    margin-top: 2rem;
-    padding: 1rem;
-    background-color: #fafafa;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+.comments-section{
+    margin-top:1rem;
+    padding:1rem;
+    background-color:#fafafa;
+    border-radius:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
 }
-
-.comment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+.comments-section h3{ margin:0 0 8px 0; font-size:1.05rem; }
+.comments-section textarea{
+    width:100%;
+    min-height:80px;
+    padding:0.75rem;
+    border:1px solid #ddd;
+    border-radius:8px;
+    resize:vertical;
+    font-family:inherit;
 }
-
-.comment-input {
-    width: 100%;
-    min-height: 80px;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    resize: vertical;
-}
-
-.comment-submit {
+.comment-submit-button {
     align-self: flex-end;
-    background-color: #0077cc;
-    color: white;
+    padding: 8px 16px;
     border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 6px;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
     cursor: pointer;
-    transition: background-color 0.2s;
 }
-
-.comment-submit:hover {
-    background-color: #005fa3;
+.comment-submit-button:hover {
+    background-color: #0056b3;
 }
-
+/* comment list items (your JSX uses .comment-list .comment-item) */
 .comment-list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    margin-top: 12px;
 }
 
 .comment-item {
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #eee;
+    background: #f7f7f7;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+.comment-item small{ color:#777; font-size:0.85rem; }
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.comment-date {
-    font-size: 0.8rem;
-    color: #777;
+.comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px;
+    resize: vertical;
 }
