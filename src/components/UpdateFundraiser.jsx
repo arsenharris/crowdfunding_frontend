@@ -1,15 +1,15 @@
-async function updateFundraiser(id, newImageUrl) {
+async function updateFundraiser(id, data) {
     const token = window.localStorage.getItem("token");
     const url = `${import.meta.env.VITE_API_URL}/fundraisers/${id}/`;
 
     const response = await fetch(url, {
-        method: "PATCH", // PATCH updates only the fields you send
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Token ${token}`
         },
         body: JSON.stringify({
-            image: newImageUrl
+            data
         }),
     });
 

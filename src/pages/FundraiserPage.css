@@ -1,4 +1,4 @@
-/* page layout */
+page layout
     .fundraiser-page {
     display: flex;
     flex-direction: column; /* stack image, details, bottom */
@@ -323,4 +323,25 @@
     border-radius: 8px;
     padding: 8px;
     resize: vertical;
+}
+
+
+
+/* delete fundraiser */
+
+.delete-button {
+    display: block !important;
+    background: crimson;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: fit-content;
+    margin-top: 20px;
+}
+
+.delete-button:hover {
+    background: darkred;
 }

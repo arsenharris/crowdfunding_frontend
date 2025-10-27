@@ -57,6 +57,25 @@ form label {
     margin-bottom: 5px;
 }
 
+form select {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background-color: #fff;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    width: 100%;
+    margin-bottom: 10px;
+    appearance: none; /* hides the default arrow */
+    background-image: linear-gradient(45deg, transparent 50%, #666 50%), linear-gradient(135deg, #666 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(50% - 4px), calc(100% - 15px) calc(50% - 4px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
 form input {
     width: 100%;
     padding: 12px 15px;
@@ -68,7 +87,7 @@ form input {
 }
 
 form input:focus {
-    border-color: #ff416c;
+    border-color: #00000;
     box-shadow: 0 0 5px rgba(255, 65, 108, 0.3);
 }
 

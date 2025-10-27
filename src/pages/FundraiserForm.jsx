@@ -53,8 +53,6 @@ function FundraiserForm() {
         }
     };
 
-
-
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -95,7 +93,6 @@ function FundraiserForm() {
                     <option value="short">Short</option>
                     <option value="picture">Picture</option>
                     <option value="middle">Middle</option>
-                    <option value="young Adult">Young Adult</option>
                 </select>
 
             </div>

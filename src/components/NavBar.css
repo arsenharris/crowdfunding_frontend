@@ -1,50 +1,461 @@
-/* NavBar.css */
-
 .navbar {
+    /* navbar colors set here (no :root) */
+    background: #293793;            /* deep navy */
+    color: #eebcbc;                 /* nav text */
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #004aad;
-    color: white;
-    padding: 15px 40px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
+    gap: 16px;
+    height: 60px;
+    padding: 0 20px;
+    box-shadow: 0 2px 8px rgba(2,6,23,0.08);
     position: sticky;
     top: 0;
     z-index: 1000;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
+/* logo */
 .navbar-logo {
-    font-size: 1.4rem;
-    font-weight: bold;
-    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #ffffff;
+    text-decoration: none;
 }
 
+/* links */
 .navbar-links {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: 14px;
+    margin-left: 8px;
 }
 
 .navbar-links a {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease, border-bottom 0.3s ease;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background 120ms ease, color 120ms ease, transform 120ms ease;
 }
 
+/* hover uses inline colors */
 .navbar-links a:hover {
-    color: #ffd700;
-    border-bottom: 2px solid #ffd700;
+    background: rgba(255,255,255,0.06);
+    color: #00c2a8; /* minty accent */
+    transform: translateY(-1px);
 }
 
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+/* right side */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
+/* compact login/register links */
+.navbar-right a {
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.navbar-right a.cta {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* profile */
+.profile-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* profile button (compact) */
+.profile-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 140ms ease;
+}
+.profile-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 6px rgba(0,194,168,0.12);
+}
+.profile-button:hover {
+    transform: translateY(-1px);
+}
+
+/* navbar avatar: small & flat */
+.profile-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 3px 8px rgba(2,6,23,0.08);
+    background: #f6f8fa; /* very light neutral */
+    display: block;
+}
+
+/* initials fallback */
+.profile-initials {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #0b2545;
+    background: #ffd89b;
+    box-shadow: 0 3px 8px rgba(2,6,23,0.06);
+}
+
+/* dropdown menu (flat & airy) */
+.profile-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 220px;
+    background: #ffffff; /* menu background */
+    color: #0b2545;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 10px 30px rgba(11,37,69,0.08);
+    z-index: 2000;
+    transform-origin: top right;
+    font-size: 0.95rem;
+}
+
+/* menu content */
+.profile-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(11,37,69,0.04);
+}
+
+.profile-avatar-sm {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(11,37,69,0.06);
+}
+
+.profile-info-name {
+    font-weight: 700;
+    color: #0b2545;
+    font-size: 1rem;
+}
+
+.profile-info-sub {
+    font-size: 0.86rem;
+    color: #5b7a91;
+}
+
+/* menu items */
+.profile-menu-item {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #0b2545;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-weight: 600;
+    transition: background 120ms ease;
+}
+.profile-menu-item:hover {
+    background: rgba(11,37,69,0.03);
+}
+.profile-menu-item.logout {
+    color: #d64545;
+    font-weight: 700;
+}
+
+/* responsive tweaks */
+@media (max-width: 880px) {
+    .navbar { padding: 0 14px; }
+    .navbar-links { gap: 10px; }
+    .profile-button { width: 32px; height: 32px; }
+    .profile-avatar { width: 18px; height: 18px; }
+}
+
+@media (max-width: 560px) {
+    .navbar {
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px 12px;
+    }
     .navbar-links {
         flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+    .navbar-right {
+        justify-content: space-between;
+    }
+    .profile-menu {
+        right: 8px;
+        left: 8px;
+    }
+}
+```// filepath: /Users/lycia/shecodes2025/react/crowdfunding_frontend/src/components/NavBar.css
+/* Clean, flat "startup" navbar — colors set on .navbar (no :root) */
+
+.navbar {
+    /* navbar colors set here (no :root) */
+    background: #0b2545;            /* deep navy */
+    color: #ffffff;                 /* nav text */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 60px;
+    padding: 0 20px;
+    box-shadow: 0 2px 8px rgba(2,6,23,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* logo */
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* links */
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-left: 8px;
+}
+
+.navbar-links a {
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+/* hover uses inline colors */
+.navbar-links a:hover {
+    background: rgba(255,255,255,0.06);
+    color: #00c2a8; /* minty accent */
+    transform: translateY(-1px);
+}
+
+/* right side */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* compact login/register links */
+.navbar-right a {
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.navbar-right a.cta {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* profile */
+.profile-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* profile button (compact) */
+.profile-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 140ms ease;
+}
+.profile-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 6px rgba(0,194,168,0.12);
+}
+.profile-button:hover {
+    transform: translateY(-1px);
+}
+
+/* navbar avatar: small & flat */
+.profile-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 3px 8px rgba(2,6,23,0.08);
+    background: #f6f8fa; /* very light neutral */
+    display: block;
+}
+
+/* initials fallback */
+.profile-initials {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #0b2545;
+    background: #ffd89b;
+    box-shadow: 0 3px 8px rgba(2,6,23,0.06);
+}
+
+/* dropdown menu (flat & airy) */
+.profile-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 220px;
+    background: #ffffff; /* menu background */
+    color: #0b2545;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 10px 30px rgba(11,37,69,0.08);
+    z-index: 2000;
+    transform-origin: top right;
+    font-size: 0.95rem;
+}
+
+/* menu content */
+.profile-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(11,37,69,0.04);
+}
+
+.profile-avatar-sm {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(11,37,69,0.06);
+}
+
+.profile-info-name {
+    font-weight: 700;
+    color: #0b2545;
+    font-size: 1rem;
+}
+
+.profile-info-sub {
+    font-size: 0.86rem;
+    color: #5b7a91;
+}
+
+/* menu items */
+.profile-menu-item {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #0b2545;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-weight: 600;
+    transition: background 120ms ease;
+}
+.profile-menu-item:hover {
+    background: rgba(11,37,69,0.03);
+}
+.profile-menu-item.logout {
+    color: #d64545;
+    font-weight: 700;
+}
+
+/* responsive tweaks */
+@media (max-width: 880px) {
+    .navbar { padding: 0 14px; }
+    .navbar-links { gap: 10px; }
+    .profile-button { width: 32px; height: 32px; }
+    .profile-avatar { width: 18px; height: 18px; }
+}
+
+@media (max-width: 560px) {
+    .navbar {
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px 12px;
+    }
+    .navbar-links {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+    .navbar-right {
+        justify-content: space-between;
+    }
+    .profile-menu {
+        right: 8px;
+        left: 8px;
     }
 }

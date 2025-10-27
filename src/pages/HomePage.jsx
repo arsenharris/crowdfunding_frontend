@@ -12,12 +12,6 @@ function HomePage() {
     const { featured, isLoading: featuredLoading } = useFeaturedFundraisers();
     const [query, setQuery] = useState("");
     const [sortBy, setSortBy] = useState("default");
-
-
-    const handleLogout = () => {
-        window.localStorage.removeItem("token");
-        navigate("/");
-    };
     
 
     const handleSearchChange = (e) => setQuery(e.target.value.trimStart());
@@ -79,8 +73,6 @@ function HomePage() {
                         <option value="goalAsc">Goal (low → high)</option>
                     </select>
                 </div>
-
-                <button className="logout-button" onClick={handleLogout}>Log out</button>
 
             </div>
             {featured && featured.length > 0 && (

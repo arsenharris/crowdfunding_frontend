@@ -8,6 +8,9 @@ import { ThumbsUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PledgeForm from "../components/PledgeForm";
 import usePledges from "../hooks/use-pledges";
+import deleteFundraiser from "../api/delete-fundraiser";
+import updateFundraiser from "../components/UpdateFundraiser";      
+
 
 function FundraiserPage() {
     const navigate = useNavigate();
@@ -17,12 +20,63 @@ function FundraiserPage() {
     const [comments, setComments] = useState([]);
     const { fundraiser, isLoading, error } = useFundraiser(id); 
     const [showPledgeForm, setShowPledgeForm] = useState(false);
-
+    const [isDeleting, setIsDeleting] = useState(false);
+    const currentUsername = window.localStorage.getItem("username") || "";
+    ///////// Comments /////////    
     useEffect(() => {
         if (fundraiser?.comments) {
             setComments(fundraiser.comments);
         }
     }, [fundraiser]);
+
+// --- edit state ---
+    const [isEditing, setIsEditing] = useState(false);
+    const [editTitle, setEditTitle] = useState("");
+    const [editImage, setEditImage] = useState("");
+    const [editGoal, setEditGoal] = useState("");
+    const [isSaving, setIsSaving] = useState(false);    
+    // When opening edit mode, seed local fields from fundraiser
+    useEffect(() => {
+        if (isEditing && fundraiser) {
+            setEditTitle(fundraiser.title ?? "");
+            setEditImage(fundraiser.image ?? "");
+            setEditGoal(fundraiser.goal ? String(fundraiser.goal) : "");
+        }
+    }, [isEditing, fundraiser]);
+
+    const startEdit = () => {
+        if (fundraiser?.owner?.username !== currentUsername) return;
+        setIsEditing(true);
+    };
+    const cancelEdit = () => {
+        setIsEditing(false);
+        setIsSaving(false);
+    };
+
+    const saveEdit = async () => {
+        if (!fundraiser) return;
+        // basic validation
+        if (!editTitle.trim()) {
+            alert("Title cannot be empty");
+            return;
+        }
+        const payload = {
+            title: editTitle.trim(),
+            image: editImage.trim() || null,
+            goal: editGoal ? Number(editGoal) : null,
+        };
+        setIsSaving(true);
+        try {
+            await updateFundraiser(id, payload);
+            // simple refresh so the useFundraiser hook reloads
+            window.location.reload();
+        } catch (err) {
+            console.error("Failed to update fundraiser:", err);
+            alert("Could not update fundraiser: " + (err.message || ""));
+            setIsSaving(false);
+        }
+    };
+
 
 
     ///////// Likes /////////
@@ -71,6 +125,22 @@ function FundraiserPage() {
     const pledges = fundraiser?.pledges ?? [];
     const pledgesCount = pledges.length;
 
+    // delete fundraiser
+    const handleDelete = async () => {
+        if (!fundraiser) return;
+        if (!confirm("Are you sure you want to permanently delete this fundraiser?")) return;
+        setIsDeleting(true);
+        try {
+            await deleteFundraiser(id);
+            navigate("/");
+        } catch (err) {
+            console.error("Failed to delete fundraiser:", err);
+            alert("Could not delete fundraiser: " + (err.message || "Unknown error"));
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
 
 
     if (isLoading) {
@@ -90,7 +160,35 @@ function FundraiserPage() {
                 <div className="fundraiser-image"> <img src={fundraiser.image} alt={fundraiser.title} /> </div>
                 <div className="right-side"> 
                 {/* Title */}
-                <div className="image-title"><h1>{fundraiser.title}</h1></div>
+                <div className="image-title">
+                    {!isEditing ? (
+                        <>
+                            <h1>{fundraiser.title}</h1>
+                            {fundraiser?.owner?.username === currentUsername && (
+                                <button className="edit-button" onClick={startEdit} title="Edit fundraiser">Edit</button>
+                            )}
+                        </>
+                    ) : (
+                        <div className="edit-form">
+                            <label>
+                                Title
+                                <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
+                            </label>
+                            <label>
+                                Image URL
+                                <input value={editImage} onChange={(e) => setEditImage(e.target.value)} />
+                            </label>
+                            <label>
+                                Goal
+                                <input value={editGoal} onChange={(e) => setEditGoal(e.target.value)} type="number" />
+                            </label>
+                            <div className="edit-actions">
+                                <button onClick={saveEdit} disabled={isSaving}>{isSaving ? "Saving…" : "Save"}</button>
+                                <button onClick={cancelEdit} disabled={isSaving}>Cancel</button>
+                            </div>
+                        </div>
+                    )}
++                </div>
                 {/* Genre */}
                 <p><strong>Genre:</strong> {fundraiser.genre_type}</p>
                 {/* Goal */}
@@ -197,7 +295,24 @@ function FundraiserPage() {
                 </div>
 
 
+
+
+
                 {/* Back to home button */}
+                <button onClick={() => navigate("/")} className="back-button"> ← Back to Home </button>
+                {/* Delete fundraiser button */}
+                                {/* Delete button - only show to owner if we can detect them */}
+                {fundraiser?.owner?.username === currentUsername && (
+                <button
+                        className="delete-button"
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                        aria-disabled={isDeleting}
+                        title="Delete this fundraiser"
+                    >
+                        {isDeleting ? "Deleting…" : "Delete Fundraiser"}
+                </button>
+                )}
                 </div>
             </div>
         </div>
