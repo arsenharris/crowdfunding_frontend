@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from "../components/Footer";
 import defaultAvatar from "../assets/default-avatar.jpg";
+import "./About.css";
 
 function About() {
     return (

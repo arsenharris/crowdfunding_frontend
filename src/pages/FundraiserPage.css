@@ -1,347 +1,312 @@
-page layout
-    .fundraiser-page {
-    display: flex;
-    flex-direction: column; /* stack image, details, bottom */
-    gap: 24px;
-    max-width: 1200px;
-    margin: 28px auto;
-    padding: 16px;
+.fundraiser-page{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+    max-width:1200px;
+    margin:28px auto;
+    padding:16px;
+    font-family: var(--font-sans, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
+    color: var(--text);
 }
 
-
-/* image column */
+/* Image column (glass framed) */
 .fundraiser-image{
     position:relative;
-    flex: 0 0 auto;
-    width: 100%;
-    border-radius:12px;
+    flex:0 0 auto;
+    width:100%;
+    border-radius:var(--radius,12px);
     overflow:hidden;
-    box-shadow:var(--shadow-1);
-    background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.01));
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: var(--shadow-lg, 0 18px 50px rgba(2,8,20,0.35));
 }
 .fundraiser-image img{
     width:100%;
     height:auto;
-    max-height:420px; /* increase for a bigger image on small screens */
+    max-height:420px;
     object-fit:cover;
-    object-position:0% 50%;
+    object-position:50% 50%;
     display:block;
-    transition:transform .3s ease;
+    transition: transform .35s cubic-bezier(.2,.9,.3,1);
 }
-.fundraiser-image img:hover{ transform:scale(1.02); }
+.fundraiser-image:hover img{ transform: scale(1.02); }
 
-/* ===== Title overlay (your JSX places <h1> inside .image-title) ===== */
+/* Title overlay on image */
 .image-title{
     position:absolute;
-    left:120px;
-    right:12px;
-    top: calc(var(--navbar-height, 64px) + 12px);
-    padding:10px 20px;
-    background: transparent; /* no background color */
-    color: var(--title-color, #000); /* configurable text color */
-    font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    left:20px;
+    right:20px;
+    top:20px;
+    padding:10px 14px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06));
+    border-radius:12px;
+    color: var(--text);
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    z-index:3;
+    backdrop-filter: blur(calc(var(--glass-blur,12px) / 2));
 }
 .image-title h1{
     margin:0;
-    font-size:1.25rem; /* slightly larger title */
+    font-size:clamp(18px,2.6vw,28px);
     font-weight:900;
     line-height:1.05;
-    font-family:inherit;
-    letter-spacing:-0.02em;
+    color: var(--accent-b);
+    -webkit-font-smoothing:antialiased;
 }
 
-/* ===== Details column (right) ===== */
+/* Details column */
 .fundraiser-details{
     flex:1 1 420px;
     min-width:300px;
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:12px;
+    color:var(--text);
 }
-/* Generic paragraphs in the details column (genre, goal, description, owner) */
+.fundraiser-details h1{
+    margin:0 0 6px 0;
+    font-size:1.4rem;
+    color: var(--accent-b);
+    font-weight:800;
+}
 .fundraiser-details p{
     margin:0;
     color:var(--muted);
     line-height:1.45;
     font-size:0.98rem;
 }
-.fundraiser-details p strong{ color:#0f172a; font-weight:700; }
-
-/* created / end-date / status headings */
+.fundraiser-details p strong{
+    color:var(--text);
+    font-weight:700;
+}
 .fundraiser-details h3{
     margin:6px 0;
-    color:#0f172a;
+    color: var(--accent-b);
     font-weight:700;
     font-size:1rem;
 }
-/* top side */
 
+/* page layout sections */
 .top-side{
     display:flex;
     flex-direction:column;
     gap:16px;
     align-items:stretch;
 }
-
-/* right side */
 .right-side{
     flex:1 1 auto;
-    padding: 8px 0 0 0;
+    padding:0;
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
-}
-/* Bottom side */
-.bottom-side {
-    width: 100%; /* full width under the image */
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    background: #fff;
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-@media (min-width: 700px) {
-    .top-side{
-        flex-direction:row;
-        align-items:flex-start;
-        gap:24px;
-    }
-
-    .fundraiser-image{
-        flex: 0 0 380px; /* a bit wider image column */
-        width: auto;
-    }
-
-    .fundraiser-image img{
-        max-height:340px; /* correspondingly larger */
-    }
-
-    .right-side{
-        padding-left:18px;
-        flex: 1 1 520px; /* give the right-side a bit more room */
-    }
-
-    /* ensure bottom-side still spans full width under both columns */
-    .bottom-side {
-        width: 100%;
-    }
+    gap:12px;
 }
 
-/* image likes */
-.image-likes {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+/* Bottom card: glass panel with subtle elevation */
+.bottom-side{
+    width:100%;
+    margin-top:24px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+    padding:20px;
+    border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: var(--shadow-lg);
 }
 
-.like-button:hover{ filter:brightness(0.95); }
+/* Responsive adjustments */
+@media (min-width:700px){
+    .top-side{ flex-direction:row; align-items:flex-start; gap:24px; }
+    .fundraiser-image{ flex:0 0 380px; width:auto; }
+    .fundraiser-image img{ max-height:340px; }
+    .right-side{ padding-left:18px; flex:1 1 520px; }
+}
 
-.likes-count{
+/* likes / actions (inline) */
+.image-likes{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+.like-button{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    border:1px solid rgba(255,255,255,0.03);
+    color:var(--text);
+    cursor:pointer;
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+.like-button:hover{ transform:translateY(-4px); box-shadow:0 12px 30px rgba(2,8,20,0.12); }
+.likes-count{ font-weight:700; color:var(--muted); }
+
+/* back button */
+.back-button{
+    padding:8px 16px;
+    border-radius:10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    border:1px solid rgba(255,255,255,0.03);
+    color:var(--text);
+    cursor:pointer;
+}
+.back-button:hover{ transform:translateY(-3px); box-shadow:0 8px 22px rgba(2,8,20,0.08); }
+
+/* Progress bar (glass-friendly, accent gradient) */
+.progress-section{ border-top: 1px solid rgba(255,255,255,0.03); padding-top:16px; }
+.progress-container{
+    --progress-height:20px;
+    width:100%;
+    max-width:520px;
+    margin:0.6rem 0 1rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(0,0,0,0.02));
+    border-radius:12px;
+    padding:3px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.03);
+}
+.progress-bar{
+    height:var(--progress-height);
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding-right:10px;
+    box-sizing:border-box;
+    color:#022827;
     font-weight:700;
+    font-size:0.9rem;
+    line-height:1;
+    border-radius:999px;
+    transition: width 700ms cubic-bezier(.2,.9,.2,1), background 300ms ease;
+    min-width:36px;
+    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+    position:relative;
+    text-shadow:none;
+}
+.progress-bar::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.04) 75%, transparent 75%, transparent);
+    background-size:24px 24px;
+    opacity:0.45;
+    pointer-events:none;
+    animation: stripeMove 3s linear infinite;
+    border-radius:inherit;
+}
+.progress-bar[aria-valuenow="100"]{
+    background: linear-gradient(90deg, #16a34a 0%, #4ade80 100%);
+    box-shadow:0 0 0 6px rgba(34,197,94,0.06);
+}
+.progress-label{ display:inline-block; padding:0 6px; white-space:nowrap; color:#022827; }
+
+/* Meta line */
+.progress-meta{
+    margin-top:0.45rem;
+    display:flex;
+    gap:0.75rem;
+    align-items:baseline;
+    font-size:0.9rem;
     color:var(--muted);
 }
+.progress-meta small{ display:block; }
 
-/* back button (keeps your class) */
-.back-button {
-    padding: 8px 16px;
-    border: 1px solid #ccc;
-    background: #fafafa;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.back-button:hover {
-    background: #f0f0f0;
-}
-.fundraiser-details h1 {
-    margin: 0 0 10px 0; /* remove default top margin so title aligns with image top */
-}
-
-/* Progress bar */
-.progress-section {
-    border-top: 1px solid #eee;
-    padding-top: 16px;
-}
-.progress-container {
-    --progress-height: 20px;
-    width: 100%;
-    max-width: 520px;
-    margin: 0.6rem 0 1rem;
-    background: #eef4f8; /* track color */
-    border-radius: 9px;
-    padding: 3px; /* gives a small inset */
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
-    position: relative;
-    overflow: hidden;
-}
-.progress-bar {
-    /* this element is the colored fill; width controlled inline by your JSX */
-    height: var(--progress-height);
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 10px;
-    box-sizing: border-box;
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.85rem;
-    line-height: 1;
-    border-radius: 999px; /* keep fill rounded */
-    transition: width 700ms cubic-bezier(.2,.9,.2,1), background 300ms ease;
-    min-width: 36px; /* ensures label has space when very small */
-    background: linear-gradient(90deg, #2563eb 0%, #06b6d4 100%); /* blue -> teal */
-    position: relative;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.18);
-    overflow: visible;
-}
-/* Animated diagonal stripes for motion (subtle) */
-.progress-bar::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(135deg, rgba(255,255,255,0.06) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.06) 75%, transparent 75%, transparent);
-    background-size: 24px 24px;
-    opacity: .6;
-    pointer-events: none;
-    animation: stripeMove 3s linear infinite;
-    mix-blend-mode: overlay;
-    border-radius: inherit;
-}
-/* When goal reached (exact 100), darker green */
-.progress-bar[aria-valuenow="100"] {
-    background: linear-gradient(90deg, #16a34a 0%, #4ade80 100%);
-    box-shadow: 0 0 0 4px rgba(34,197,94,0.06);
-}
-
-/* Make the percent label readable when fill is narrow by allowing it to overflow into the track padding */
-.progress-label {
-    display: inline-block;
-    padding: 0 6px;
-    white-space: nowrap;
-}
-
-/* Meta line below */
-.progress-meta {
-    margin-top: 0.45rem;
-    display: flex;
-    gap: 0.75rem;
-    align-items: baseline;
-    font-size: 0.9rem;
-    color: #374151;
-}
-
-.progress-meta small {
-    display: block;
-}
-
-/* Small-screen adjustments */
-@media (max-width: 420px) {
-    .progress-container { max-width: 100%; }
-    .progress-bar { min-width: 28px; padding-right: 8px; }
-    .progress-label { font-size: 0.78rem; }
-}
-
-/* Keyframes */
-@keyframes stripeMove {
-    from { background-position: 0 0; }
-    to { background-position: 48px 0; }
-}
-
-/* ===== Pledges list (your JSX uses .pledges-section .pledges-list .pledge-item) ===== */
+/* Pledges list */
 .pledges-section{ margin-top:10px; }
-.pledges-list{ list-style:none; padding:0; margin:8px 0 0 0; display:flex; flex-direction:column; gap:8px; }
+.pledges-list{
+    list-style:none;
+    padding:0;
+    margin:8px 0 0 0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
 .pledge-item{
-    background:#fff;
-    border:1px solid rgba(15,23,42,0.04);
-    padding:10px;
-    border-radius:8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    border:1px solid rgba(255,255,255,0.03);
+    padding:12px;
+    border-radius:12px;
     display:flex;
     justify-content:space-between;
     gap:8px;
     align-items:center;
-    font-weight:600;
+    font-weight:700;
+    color:var(--text);
+    transition: transform .14s ease, box-shadow .14s ease;
 }
+.pledge-item:hover{ transform:translateY(-6px); box-shadow:0 12px 34px rgba(2,8,20,0.12); }
 
-
-
-/* Comments Section */
+/* Comments */
 .comments-section{
     margin-top:1rem;
-    padding:1rem;
-    background-color:#fafafa;
+    padding:16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
     border-radius:12px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow:0 8px 24px rgba(2,8,20,0.06);
 }
-.comments-section h3{ margin:0 0 8px 0; font-size:1.05rem; }
+.comments-section h3{ margin:0 0 8px 0; font-size:1.05rem; color:var(--accent-b); }
 .comments-section textarea{
     width:100%;
     min-height:80px;
-    padding:0.75rem;
-    border:1px solid #ddd;
-    border-radius:8px;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.04);
+    background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(0,0,0,0.02));
+    color:var(--text);
     resize:vertical;
     font-family:inherit;
 }
-.comment-submit-button {
-    align-self: flex-end;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
+.comment-submit-button{
+    align-self:flex-end;
+    padding:8px 16px;
+    border:none;
+    border-radius:10px;
+    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+    color:#022827;
+    cursor:pointer;
+    font-weight:700;
 }
-.comment-submit-button:hover {
-    background-color: #0056b3;
+.comment-submit-button:hover{ transform:translateY(-3px); box-shadow:0 10px 30px rgba(2,8,20,0.08); }
+.comment-list{ list-style:none; padding:0; margin-top:12px; }
+.comment-item{
+    background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(0,0,0,0.02));
+    padding:10px 12px;
+    border-radius:10px;
+    margin-bottom:8px;
+    color:var(--text);
 }
-/* comment list items (your JSX uses .comment-list .comment-item) */
-.comment-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 12px;
+.comment-item small{ color:var(--muted); font-size:0.86rem; }
+
+/* Delete button (prominent but styled) */
+.delete-button{
+    display:inline-block;
+    background:linear-gradient(180deg, rgba(220,38,38,0.95), rgba(185,28,28,0.95));
+    color:#fff;
+    padding:10px 16px;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
 }
+.delete-button:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(139,14,14,0.12); }
 
-.comment-item {
-    background: #f7f7f7;
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
-.comment-item small{ color:#777; font-size:0.85rem; }
-.comment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.comment-form textarea {
-    width: 100%;
-    min-height: 80px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 8px;
-    resize: vertical;
-}
-
-
-
-/* delete fundraiser */
-
-.delete-button {
-    display: block !important;
-    background: crimson;
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    width: fit-content;
-    margin-top: 20px;
+/* small screens */
+@media (max-width:420px){
+    .progress-container{ max-width:100%; }
+    .progress-bar{ min-width:28px; padding-right:8px; }
+    .progress-label{ font-size:0.78rem; }
 }
 
-.delete-button:hover {
-    background: darkred;
+/* reduced motion respect */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; animation:none !important; }
 }
