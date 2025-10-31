@@ -1,4 +1,4 @@
-import FundraiserForm from "../pages/FundraiserForm";
+import FundraiserForm from "./FundraiserForm";
 
 function CreateFundraiserPage() {
     return <FundraiserForm />;

@@ -1,15 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useFundraiser from "../hooks/use-fundraiser";
-import postLike from "../api/like-fundraiser";
-import postComment from "../api/comment-fundraiser";
+import postLike from "../api/post-likefundraiser";
+import postComment from "../api/post-commentfundraiser";
 import "./FundraiserPage.css";
 import { ThumbsUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import PledgeForm from "../components/PledgeForm";
+import PledgeForm from "../components/FundraiserPledgeForm";
 import usePledges from "../hooks/use-pledges";
 import deleteFundraiser from "../api/delete-fundraiser";
-import updateFundraiser from "../components/UpdateFundraiser";      
+import updateFundraiser from "../api/put-fundraiser";      
 
 
 function FundraiserPage() {
@@ -18,10 +18,13 @@ function FundraiserPage() {
     const [likes, setLikes] = useState(0);
     const [commentText, setCommentText] = useState("");
     const [comments, setComments] = useState([]);
-    const { fundraiser, isLoading, error } = useFundraiser(id); 
+    const {fundraiser, isLoading, error } = useFundraiser(id);
+    const {pledge} = usePledges(id); 
     const [showPledgeForm, setShowPledgeForm] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const currentUsername = window.localStorage.getItem("username") || "";
+    
+    
     ///////// Comments /////////    
     useEffect(() => {
         if (fundraiser?.comments) {
@@ -160,35 +163,7 @@ function FundraiserPage() {
                 <div className="fundraiser-image"> <img src={fundraiser.image} alt={fundraiser.title} /> </div>
                 <div className="right-side"> 
                 {/* Title */}
-                <div className="image-title">
-                    {!isEditing ? (
-                        <>
-                            <h1>{fundraiser.title}</h1>
-                            {fundraiser?.owner?.username === currentUsername && (
-                                <button className="edit-button" onClick={startEdit} title="Edit fundraiser">Edit</button>
-                            )}
-                        </>
-                    ) : (
-                        <div className="edit-form">
-                            <label>
-                                Title
-                                <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
-                            </label>
-                            <label>
-                                Image URL
-                                <input value={editImage} onChange={(e) => setEditImage(e.target.value)} />
-                            </label>
-                            <label>
-                                Goal
-                                <input value={editGoal} onChange={(e) => setEditGoal(e.target.value)} type="number" />
-                            </label>
-                            <div className="edit-actions">
-                                <button onClick={saveEdit} disabled={isSaving}>{isSaving ? "Saving…" : "Save"}</button>
-                                <button onClick={cancelEdit} disabled={isSaving}>Cancel</button>
-                            </div>
-                        </div>
-                    )}
-+                </div>
+                <p><strong>Title:</strong> {fundraiser.title}</p>
                 {/* Genre */}
                 <p><strong>Genre:</strong> {fundraiser.genre_type}</p>
                 {/* Goal */}

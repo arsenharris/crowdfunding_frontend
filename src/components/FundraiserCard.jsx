@@ -14,6 +14,7 @@ function FundraiserCard(props) {
             <div className="fundraiser-info">
                 <h3 className="title">{fundraiserData.title}</h3>
                 <h3 className="goal">${fundraiserData.goal}</h3>
+                <h3 className="likes">❤️{fundraiserData.likes}</h3>
             </div>
 
         </Link>

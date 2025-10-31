@@ -1,3 +1,4 @@
+
 async function updateFundraiser(id, data) {
     const token = window.localStorage.getItem("token");
     const url = `${import.meta.env.VITE_API_URL}/fundraisers/${id}/`;

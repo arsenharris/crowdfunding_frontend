@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import createUser from "../api/create-user";
+import createUser from "../api/post-createuser";
 import "./RegisterForm.css";
 
 function RegisterForm() {

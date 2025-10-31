@@ -6,8 +6,8 @@ import HomePage from "./pages/HomePage.jsx";
 import FundraiserPage from "./pages/FundraiserPage.jsx";
 import NavBar from "./components/NavBar.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import FundraiserForm from "./pages/FundraiserForm.jsx";
-import RegisterForm from "./pages/RegisterForm.jsx";
+import FundraiserForm from "./components/FundraiserForm.jsx";
+import RegisterForm from "./components/RegisterForm.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 
@@ -24,6 +24,8 @@ const router = createBrowserRouter([
       { path: "/fundraisers", element: <FundraiserForm /> },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
+      // { path: "/profile", element: <Profile /> },
+
 
     ]
   }

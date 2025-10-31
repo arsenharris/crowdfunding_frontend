@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import getFundraiser from "../api/get-fundraiser";
 
 export default function useFundraiser(fundraiserId) {
@@ -8,7 +7,6 @@ export default function useFundraiser(fundraiserId) {
     const [error, setError] = useState();
 
     useEffect(() => {
-        // Here we pass the fundraiserId to the getFundraiser function.
         getFundraiser(fundraiserId)
             .then((fundraiser) => {
                 setFundraiser(fundraiser);
@@ -19,7 +17,6 @@ export default function useFundraiser(fundraiserId) {
                 setIsLoading(false);
             });
 
-        // This time we pass the fundraiserId to the dependency array so that the hook will re-run if the fundraiserId changes.
     }, [fundraiserId]);
 
     return { fundraiser, isLoading, error };

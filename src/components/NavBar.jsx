@@ -9,7 +9,9 @@ function NavBar() {
     const [avatarUrl, setAvatarUrl] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
-
+    const token = window.localStorage.getItem("token");
+    const isLoggedIn = !!token;
+    const displayAvatar = avatarUrl || defaultAvatar;
 
     useEffect(() => {
         setUsername(window.localStorage.getItem("username") || "");
@@ -37,12 +39,6 @@ function NavBar() {
         ? username.split(" ").map(s => s[0]).slice(0,2).join("").toUpperCase()
         : "?";
 
-
-    const token = window.localStorage.getItem("token");
-    const isLoggedIn = !!token;
-    
-    const displayAvatar = avatarUrl || defaultAvatar;
-
     return (
         <div>
             <nav className="navbar">
@@ -54,7 +50,6 @@ function NavBar() {
                 <Link to="/fundraisers"> New Fundraiser</Link>
                 <Link to="/about"> About Us</Link>
                 <Link to="/contact"> Contact Us</Link>
-
 
                     <div className="navbar-right">
                         {!isLoggedIn && (

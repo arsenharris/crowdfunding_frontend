@@ -1,4 +1,4 @@
-import RegisterForm from "../pages/RegisterFrom";
+import RegisterForm from "./RegisterFrom";
 
 function CreateUserPage() {
     return <RegisterForm />;
