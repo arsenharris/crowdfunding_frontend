@@ -32,7 +32,7 @@ function NavBar() {
         window.localStorage.removeItem("username");
         window.localStorage.removeItem("profileImage");
         // add other keys you store
-        navigate("/login");
+        navigate("/");
     };
 
     const initials = username

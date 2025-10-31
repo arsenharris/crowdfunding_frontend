@@ -1,9 +1,10 @@
 
 async function postPledges(fundraiserId, amount, comment, anonymous) {
+
     const token = window.localStorage.getItem("token");
-    const url = `${import.meta.env.VITE_API_URL}/fundraisers/${fundraiserId}/pledges`;
+    const url = `${import.meta.env.VITE_API_URL}/pledges/`;
     const response = await fetch(url, {
-        method: "POST", // We need to tell the server that we are sending JSON data so we set the Content-Type header to application/json
+        method: "POST", 
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Token ${token}`
@@ -18,7 +19,7 @@ async function postPledges(fundraiserId, amount, comment, anonymous) {
     });
 
     if (!response.ok) {
-    const fallbackError = `Error trying to create pledges`;
+    const fallbackError = `Error trying to create pledges !!! oops`;
 
     const data = await response.json().catch(() => {
         throw new Error(fallbackError);

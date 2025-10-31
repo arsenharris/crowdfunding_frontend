@@ -1,34 +1,70 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postPledges from "../api/post-pledges";
+import { comment } from "postcss";
 
 function PledgeForm({ fundraiserId, onSuccess, onCancel }) {
-    const [credentials, setCredentials] = useState({ amount: "", comment: "Good luck!", anonymous: false });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
+    const [pledge, setPledge] = useState({ 
+        amount: "", 
+        comment: "Good luck!", 
+        anonymous: false 
+    });
+        // const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (event) => {
-        const { id, value, type, checked } = event.target;
-        setCredentials(prevCredentials => ({
-            ...prevCredentials,
-            [id]: type === "checkbox" ? checked : value
+        const { id, value} = event.target;
+        setPledge(prevPledge => ({
+            ...prevPledge,
+            [id]: value
+            // [id]: type === "checkbox" ? checked : value
         }));
-    }
-    const handleSubmit = async (event) => {
+    };
+    
+    const handleSubmit = (event) => {
+        console.log(event)
+
         event.preventDefault();
-        setIsSubmitting(true);
         try {
-            const amountNumber = Number(credentials.amount);
-            await postPledges(fundraiserId, amountNumber, credentials.comment, credentials.anonymous);
+            new Number(pledge.amount);
+        } catch (error) {
+            console.error("Invalid amount");
+            return;
+        }
+        if (pledge.amount &&
+            pledge.comment ) 
+            {
+            postPledges( 
+                fundraiserId,  
+                Number(pledge.amount),
+                pledge.comment,
+                Boolean(pledge.anonymous)
+            ).then(
+                (response) => {
+            console.log(response)
             if (onSuccess) onSuccess();
             // fallback reload if caller didn't handle UI update
-            window.location.reload();
-        } catch (error) {
-            console.error("Failed to submit pledge:", error);
-            alert("Could not submit pledge. " + (error.message || ""));
-        } finally {
-            setIsSubmitting(false);
-        }
-    }
+            window.location.reload();});
+                }
+    };
+
+            
+        // setIsSubmitting(true);
+    //     try {
+    //         const amountNumber = Number(credentials.amount);
+    //         await postPledges(fundraiserId, amountNumber, credentials.comment, credentials.anonymous);
+    //         if (onSuccess) onSuccess();
+    //         // fallback reload if caller didn't handle UI update
+    //         window.location.reload();
+    //     } catch (error) {
+    //         console.error("Failed to submit pledge:", error);
+    //         alert("Could not submit pledge. " + (error.message || ""));
+    //     } finally {
+    //         setIsSubmitting(false);
+    //     }
+    // }
+
+
 
 
 
