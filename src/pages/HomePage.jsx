@@ -63,20 +63,59 @@ function HomePage() {
     const totalPledged = (f) =>
         (f.pledges || []).reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
 
+
+
+
+
+
     const sortedFundraisers = useMemo(() => {
-        const list = [...filteredFundraisers];
-        switch (sortBy) {
-            case "newest":
-                return list.sort((a, b) => new Date(b.date_created) - new Date(a.date_created));
-            case "mostPledged":
-                return list.sort((a, b) => totalPledged(b) - totalPledged(a));
-            case "goalAsc":
-                return list.sort((a, b) => (a.goal || 0) - (b.goal || 0));
-            case "goalDesc":
-                return list.sort((a, b) => (b.goal || 0) - (a.goal || 0));
-            default:
-                return list;
-        }
+        const withIndex = filteredFundraisers.map((f, i) => ({ f, i }));
+        const safeNum = (v) => {
+            if (v == null || v === "") return 0;
+            const n = Number(v);
+            return Number.isFinite(n) ? n : 0;
+        };
+        const safeTime = (d) => {
+            const t = new Date(d).getTime();
+            return Number.isFinite(t) ? t : 0;
+        };
+        const likesCount = (item) => {
+            if (!item) return 0;
+            if (Array.isArray(item.likes)) return item.likes.length;
+            if (typeof item.likes === "number") return item.likes;
+            if (item.like_count != null) return safeNum(item.like_count);
+            if (item.likes_count != null) return safeNum(item.likes_count);
+            // sometimes likes are stored under reactions or similar
+            if (Array.isArray(item.reactions)) return item.reactions.length;
+            return 0;
+        };
+        const safeTitle = (item) => (item && item.title ? String(item.title).toLowerCase() : "");
+        const compare = (a, b) => {
+            const A = a.f, B = b.f;
+            switch (sortBy) {
+                case "newest":
+                    return safeTime(B.date_created) - safeTime(A.date_created);
+                case "mostPledged":
+                    return totalPledged(B) - totalPledged(A);
+                case "goalAsc":
+                    return safeNum(A.goal) - safeNum(B.goal);
+                case "goalDesc":
+                    return safeNum(B.goal) - safeNum(A.goal);
+                case "mostLiked":
+                    return likesCount(B) - likesCount(A);
+                case "alphaAsc":
+                    return safeTitle(A).localeCompare(safeTitle(B), undefined, { sensitivity: "base" });
+                case "alphaDesc":
+                    return safeTitle(B).localeCompare(safeTitle(A), undefined, { sensitivity: "base" });
+                default:
+                    return 0;
+            }
+        };
+        withIndex.sort((a, b) => {
+            const r = compare(a, b);
+            return r !== 0 ? r : a.i - b.i;
+        });
+        return withIndex.map((x) => x.f);
     }, [filteredFundraisers, sortBy]);
 
 
@@ -97,11 +136,13 @@ function HomePage() {
                     />
 
                     <select className="sort-select" value={sortBy} onChange={handleSortChange} aria-label="Sort fundraisers">
-                        <option value="default">Sort</option>
                         <option value="newest">Newest</option>
                         <option value="mostPledged">Most pledged</option>
                         <option value="goalDesc">Goal (high → low)</option>
                         <option value="goalAsc">Goal (low → high)</option>
+                        <option value="mostLiked">Most liked</option>
+                        <option value="alphaAsc">Alphabetical (A → Z)</option>
+                        <option value="alphaDesc">Alphabetical (Z → A)</option>
                     </select>
                 </div>
 
