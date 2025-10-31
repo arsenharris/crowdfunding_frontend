@@ -17,15 +17,46 @@ function HomePage() {
     const handleSearchChange = (e) => setQuery(e.target.value.trimStart());
     const handleSortChange = (e) => setSortBy(e.target.value);
 
-    const filteredFundraisers = (fundraisers || []).filter((f) => {
-        if (!query) return true;
-        const q = query.toLowerCase();
-        return (
-            (f.title && f.title.toLowerCase().includes(q)) ||
-            (f.description && f.description.toLowerCase().includes(q)) ||
-            (f.owner && f.owner.username && f.owner.username.toLowerCase().includes(q))
+    const filteredFundraisers = useMemo(() => {
+        const getId = (item) => {
+            if (!item) return null;
+            if (item.id != null) return String(item.id);
+            if (item.pk != null) return String(item.pk);
+            if (item._id != null) return String(item._id);
+            if (item.fundraiser) {
+                const f = item.fundraiser;
+                if (f.id != null) return String(f.id);
+                if (f.pk != null) return String(f.pk);
+                if (f._id != null) return String(f._id);
+            }
+            return null;
+        };
+
+        const featuredIds = new Set(
+            (featured || []).map(getId).filter(Boolean)
         );
-    });   
+        const featuredTitles = new Set(
+            (featured || []).map((f) => (f.title || f.fundraiser?.title || "").toLowerCase()).filter(Boolean)
+        );
+
+        const q = query.trim().toLowerCase();
+        return (fundraisers || []).filter((f) => {
+            // hide featured from the main list by id or title fallback
+            const fid = getId(f);
+            const title = (f.title || "").toLowerCase();
+            if (fid && featuredIds.has(fid)) return false;
+            if (title && featuredTitles.has(title)) return false;
+
+            if (!q) return true;
+            return (
+                (f.title && f.title.toLowerCase().includes(q)) ||
+                (f.description && f.description.toLowerCase().includes(q)) ||
+                (typeof f.owner === "string"
+                    ? f.owner.toLowerCase().includes(q)
+                    : f.owner && f.owner.username && f.owner.username.toLowerCase().includes(q))
+            );
+        });
+    }, [fundraisers, query, featured]);
 
 
     // helper to compute total pledged for sorting
@@ -87,9 +118,13 @@ function HomePage() {
             )}
             
             <div id="fundraiser-list">
-                {fundraisers.map((fundraiserData, key) => {
-                    return <FundraiserCard key={key} fundraiserData={fundraiserData} />;
-                })}
+                {sortedFundraisers.length === 0 ? (
+                    <p>No fundraisers found.</p>
+                ) : (
+                    sortedFundraisers.map((fundraiserData, idx) => (
+                        <FundraiserCard key={fundraiserData.id ?? idx} fundraiserData={fundraiserData} />
+                    ))
+                )}                
             </div>
             <Footer />
         </div>
