@@ -1,4 +1,4 @@
-import { Link, Outlet,useNavigate } from "react-router-dom";
+import { Link, Outlet,useNavigate , useLocation} from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import defaultAvatar from "../assets/default-avatar.jpg";
 import "./NavBar.css";
@@ -9,16 +9,30 @@ function NavBar() {
     const [avatarUrl, setAvatarUrl] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
-    const token = window.localStorage.getItem("token");
-    const isLoggedIn = !!token;
+    const [isLoggedIn, setIsLoggedIn] = useState(!!window.localStorage.getItem("token"));
     const displayAvatar = avatarUrl || defaultAvatar;
+    const location = useLocation();
 
     useEffect(() => {
+        setIsLoggedIn(!!window.localStorage.getItem("token"));
         setUsername(window.localStorage.getItem("username") || "");
         setAvatarUrl(window.localStorage.getItem("profileImage") || window.localStorage.getItem("avatar") || "");
-    }, []);
+    }, [location]);
 
     // close menu on outside click
+    useEffect(() => {
+        function handleStorage(e) {
+            if (!e.key) return;
+            if (["token","username","profileImage","avatar"].includes(e.key)) {
+                setIsLoggedIn(!!window.localStorage.getItem("token"));
+                setUsername(window.localStorage.getItem("username") || "");
+                setAvatarUrl(window.localStorage.getItem("profileImage") || window.localStorage.getItem("avatar") || "");
+            }
+        }
+        window.addEventListener("storage", handleStorage);
+        return () => window.removeEventListener("storage", handleStorage);
+    }, []);
+
     useEffect(() => {
         function handleClick(e) {
             if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
@@ -31,13 +45,13 @@ function NavBar() {
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("username");
         window.localStorage.removeItem("profileImage");
-        // add other keys you store
+        window.localStorage.removeItem("avatar");
+        setIsLoggedIn(false);
+        setUsername("");
+        setAvatarUrl("");
+        setMenuOpen(false);
         navigate("/login");
     };
-
-    const initials = username
-        ? username.split(" ").map(s => s[0]).slice(0,2).join("").toUpperCase()
-        : "?";
 
     return (
         <div>

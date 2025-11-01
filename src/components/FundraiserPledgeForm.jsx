@@ -46,7 +46,7 @@ function PledgeForm({ fundraiserId, onSuccess, onCancel }) {
             console.log(response)
             if (onSuccess) onSuccess();
             // fallback reload if caller didn't handle UI update
-            window.location.reload();});
+            navigate(`/fundraisers/${fundraiserId}`); 
                 }
     };
 
