@@ -1,34 +1,74 @@
-.form-group {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem;
-    color: #333;
-    line-height: 1.6;
-    background-color: #92c1f3; 
+.register-form {
+    max-width: 520px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(16,24,40,0.06);
+    color: #0f172a;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
-.form-group label {
+
+.register-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.register-form label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #0f172a;
 }
-.form-group input {
+
+/* unified input styles for username, email, password */
+.register-form .form-input {
     width: 100%;
     padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #d0d7e6;
-    border-radius: 8px;
+    border: 1px solid #e6e9ef;
+    border-radius: 10px;
     font-size: 1rem;
-    background-color: #f7f9fc;
+    background-color: #ffffff; /* explicit white for all inputs */
     box-shadow: inset 0 1px 2px rgba(16,24,40,0.03);
     transition: border-color 150ms ease, box-shadow 150ms ease, transform 100ms ease;
     color: #0f172a;
 }
-.form-group input::placeholder {
+
+.register-form .form-input::placeholder {
     color: #9aa4b2;
 }
-.form-group input:focus {
-    border-color: #4f46e5; /* matching highlight for password area */
+
+.register-form .form-input:focus {
+    border-color: #4f46e5;
     outline: none;
-    box-shadow: 0 0 0 4px rgba(79,70,229,0.08), 0 6px 18px rgba(16,24,40,0.06);
+    box-shadow: 0 0 0 6px rgba(79,70,229,0.06);
     transform: translateY(-1px);
+}
+
+/* Ensure password input (and other inputs) keep white background when browser autofills */
+.register-form .form-input:-webkit-autofill,
+.register-form .form-input:-webkit-autofill:focus,
+.register-form .form-input:-webkit-autofill:hover,
+.register-form .form-input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Submit button inside register form */
+.register-form .submit-btn {
+    display: inline-block;
+    background: linear-gradient(180deg,#4f46e5,#3730a3);
+    color: #fff;
+    padding: 0.6rem 0.9rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(79,70,229,0.12);
+    margin-top: 0.5rem;
+}
+
+/* small responsive tweak */
+@media (max-width: 520px) {
+    .register-form { margin: 1rem; padding: 1rem; }
 }
