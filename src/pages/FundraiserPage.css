@@ -244,6 +244,13 @@
 }
 .pledge-item:hover{ transform:translateY(-6px); box-shadow:0 12px 34px rgba(2,8,20,0.12); }
 
+
+.pledge-comment {
+    white-space: pre-wrap; /* preserve line breaks */
+    margin: 0.25rem 0 0.5rem 0;
+    color: #444;
+    font-size: 0.95rem;
+}
 /* Comments */
 .comments-section{
     margin-top:1rem;

@@ -286,7 +286,19 @@ function FundraiserPage() {
                                     ?? "Unknown");
                             return (
                                 <li key={p.id ?? `${idKey}-${p.amount}`} className="pledge-item">
-                                    ${p.amount} — {supporterName}
+                                    <div className="pledge-main">
+                                        ${p.amount} — {supporterName}
+                                    </div>
+                                    {p.comment && (
+                                        <div className="pledge-comment">
+                                            {p.comment}
+                                        </div>
+                                    )}
+                                    {p.date_created && (
+                                        <div className="pledge-meta">
+                                            <small>{new Date(p.date_created).toLocaleString()}</small>
+                                        </div>
+                                    )}
                                 </li>
                             );
                         })}
@@ -312,10 +324,6 @@ function FundraiserPage() {
                         </div>
                     )}
                 </div>
-
-
-
-
 
                 {/* Back to home button */}
                 <button onClick={() => navigate("/")} className="back-button"> ← Back to Home </button>
