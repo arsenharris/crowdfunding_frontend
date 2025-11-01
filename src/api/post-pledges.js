@@ -1,5 +1,5 @@
 
-async function postPledges(fundraiserId, amount, comment, anonymous) {
+async function postPledges(fundraiserId, tier_level, amount, comment, anonymous) {
 
     const token = window.localStorage.getItem("token");
     const url = `${import.meta.env.VITE_API_URL}/pledges/`;
@@ -10,11 +10,11 @@ async function postPledges(fundraiserId, amount, comment, anonymous) {
             "Authorization": `Token ${token}`
         },
         body: JSON.stringify({
-            "tier_level": null,
+            // "tier_level": tier_level,
             "amount": amount,
             "comment": comment,
             "anonymous": anonymous,
-            fundraiser: fundraiserId
+            "fundraiser": parseInt(fundraiserId)
         }),
     });
 

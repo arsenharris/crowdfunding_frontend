@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postFundraiser from "../api/post-fundraiser";
+import "./FundraiserForm.css";
 
 function FundraiserForm() {
     const navigate = useNavigate();
@@ -13,11 +14,12 @@ function FundraiserForm() {
     });
 
     const handleChange = (event) => {
-        const { id, value } = event.target;
+        const { id, name, value } = event.target;
+        const key = name || id;
         setFundraiser(prevFundraiser => ({
             ...prevFundraiser,
             // [id]: value
-        [id]: id === "goal" ? parseInt(value, 10) : value
+        [key]: value
         }));
     };
 
@@ -54,26 +56,28 @@ function FundraiserForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form className="fundraiser-form" onSubmit={handleSubmit}>
+            <div className="field">
                 <label htmlFor="title">Title:</label>
-                <input type="text" id="title" placeholder="Enter title" onChange={handleChange} />
+                <input type="text" name="title" id="title" className="input" value={fundraiser.title} placeholder="Enter title" onChange={handleChange} required />
             </div>
-            <div>
+            <div className="field">
                 <label htmlFor="description">Description:</label>
-                <input type="text" id="description" placeholder="Enter description" onChange={handleChange} />
+                <input type="text" name="description" id="description" className="input" value={fundraiser.description}    placeholder="Enter description" onChange={handleChange} rows={6}
+        required />
             </div>
-            <div>
+            <div className="field">
                 <label htmlFor="goal">Goal:</label>
-                <input type="number" id="goal" placeholder="Enter goal" onChange={handleChange} />
+                <input type="number" name="goal" id="goal" className="input" value={fundraiser.goal}   placeholder="Enter goal" inputMode="numeric" onChange={handleChange} required
+        min="10"/>
             </div>
-            <div>
+            <div className="field">
                 <label htmlFor="image">Image URL:</label>
-                <input type="url" id="image" placeholder="Enter image URL" onChange={handleChange} />
+                <input type="url" name="image" id="image" className="input"  value={fundraiser.image} placeholder="Enter image URL" onChange={handleChange} required />
             </div>
-            <div>
+            <div className="field">
                 <label htmlFor="genre_type">Genre type:</label>
-                <select id="genre_type" value={fundraiser.genre_type} onChange={handleChange}>
+                <select id="genre_type" name="genre_type" className="input" value={fundraiser.genre_type} onChange={handleChange} required>
                     <option value="">Select genre</option>
                     <option value="drama">Drama</option>
                     <option value="romance">Romance</option>
@@ -96,7 +100,7 @@ function FundraiserForm() {
                 </select>
 
             </div>
-            <button type="submit" > Create Fundraiser</button>
+            <button type="submit" className="btn primary" > Create Fundraiser</button>
         </form>
     );
 }

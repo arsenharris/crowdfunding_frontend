@@ -32,6 +32,12 @@ function FundraiserPage() {
         }
     }, [fundraiser]);
 
+   // seed likes from backend value if present
+    useEffect(() => {
+        if (typeof fundraiser?.likes === "number") {
+            setLikes(fundraiser.likes);
+        }
+    }, [fundraiser]);
 // --- edit state ---
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState("");
@@ -127,8 +133,41 @@ function FundraiserPage() {
     ///////pledges/////////
     const pledges = fundraiser?.pledges ?? [];
     const pledgesCount = pledges.length;
+    const [supporterMap, setSupporterMap] = useState({});
 
-    // delete fundraiser
+    useEffect(() => {
+        const ids = Array.from(new Set(
+            pledges
+                .filter(p => !p.anonymous && (typeof p.supporter === "number" || typeof p.supporter === "string"))
+                .map(p => String(p.supporter))
+        ));
+        if (ids.length === 0) return;
+        let cancelled = false;
+        (async () => {
+            const map = {};
+            await Promise.all(ids.map(async (id) => {
+                try {
+                    const res = await fetch(`https://inkvestor-40ee966b1650.herokuapp.com/users/${id}/`);
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    map[id] = data.username ?? data.user?.username ?? null;
+                } catch (err) {
+                    // ignore individual fetch errors
+                }
+            }));
+            if (!cancelled) setSupporterMap(map);
+        })();
+        return () => { cancelled = true; };
+    }, [pledges]);    
+
+
+
+    // owner display
+    const ownerDisplay =
+        fundraiser?.owner?.username ??
+        (typeof fundraiser?.owner === "string" ? fundraiser.owner : "Unknown");
+
+        // delete fundraiser
     const handleDelete = async () => {
         if (!fundraiser) return;
         if (!confirm("Are you sure you want to permanently delete this fundraiser?")) return;
@@ -175,9 +214,9 @@ function FundraiserPage() {
                 {/* End date */}
                 <h3> End date: {fundraiser.end_date ? new Date(fundraiser.end_date).toLocaleString() : "Not set yet"}</h3>
                 {/* Status */}
-                <h3>{`Status: ${fundraiser.is_open}`}</h3>
+                <h3>{`Status: ${fundraiser.is_open ? "Open" : "Closed"}`}</h3>
                 {/* Owner */}
-                <p><strong>Owner:</strong> {fundraiser.owner?.username}</p>
+                <p><strong>Owner:</strong> {ownerDisplay}</p>
                 {/* Progress bar */}
                 <div className="progress-container" aria-labelledby="progress-heading">
                     <h4 id="progress-heading" className="visually-hidden">Fundraiser progress</h4>
@@ -236,16 +275,21 @@ function FundraiserPage() {
                     <p><strong>Count:</strong> {pledgesCount}</p>
                     <p><strong>Total pledged:</strong> ${totalPledged}</p>
                 {/* List of individual pledges (safe map over empty array) */}
-                    <ul className="pledges-list">
-                        {pledges.map((pledge) => (
-                            <li
-                                key={pledge.id ?? `${pledge.supporter}-${pledge.amount}`}
-                                className="pledge-item"
-                            >
-                                ${pledge.amount} — {pledge.supporter}
-                            </li>
-                        ))}
-                    </ul>
+                        {pledges.map((p) => {
+                            const idKey = String(p.supporter ?? "");
+                            const supporterName = p.anonymous
+                                ? "Anonymous"
+                                : (p.supporter?.username
+                                    ?? supporterMap[idKey]
+                                    ?? (typeof p.supporter === "string" ? p.supporter : null)
+                                    ?? (typeof p.supporter === "number" ? `User #${p.supporter}` : null)
+                                    ?? "Unknown");
+                            return (
+                                <li key={p.id ?? `${idKey}-${p.amount}`} className="pledge-item">
+                                    ${p.amount} — {supporterName}
+                                </li>
+                            );
+                        })}
                 </section>  
 
                 {/* Render the pledge form so users can submit pledges */}
