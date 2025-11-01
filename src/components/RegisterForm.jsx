@@ -38,20 +38,20 @@ function RegisterForm() {
 
 
     return (
-        <form>
-            <div>
+        <form className="register-form">
+            <div className="form-group">
                 <label htmlFor="username">Username:</label>
-                <input type="text" id="username" placeholder="Enter username" onChange={handleChange} />
+                <input className="form-input" type="text" id="username" placeholder="Enter username" onChange={handleChange} />
             </div>
-            <div>
+            <div className="form-group">
                 <label htmlFor="email">Email:</label>
-                <input type="text" id="email" placeholder="Enter email" onChange={handleChange} />
+                <input className="form-input" type="text" id="email" placeholder="Enter email" onChange={handleChange} />
             </div>            
-            <div>
+            <div className="form-group">
                 <label htmlFor="password">Password:</label>
-                <input type="password" id="password" placeholder="Password" onChange={handleChange}/>
+                <input className="form-input" type="password" id="password" placeholder="Password" onChange={handleChange}/>
             </div>
-            <button type="submit" onClick={handleSubmit}> Create an account</button>
+            <button className="submit-btn" type="submit" onClick={handleSubmit}> Create an account</button>
         </form>
     );
 }

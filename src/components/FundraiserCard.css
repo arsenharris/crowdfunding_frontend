@@ -1,109 +1,90 @@
 .fundraiser-card {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    border-radius: 12px;
+    width: 360px;
+    max-width: 100%;
+    min-height: 440px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 10px;
     overflow: hidden;
-    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.94));
-    border: 1px solid rgba(11,37,69,0.04);
-    box-shadow: 0 10px 30px rgba(11,37,69,0.06);
-    transition: transform .18s ease, box-shadow .18s ease;
-    color: var(--text, #000);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    margin: 1rem;
+    background: #a5c9ec;
+    transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
-/* Make link cover the whole card */
-.fundraiser-card > a {
+.fundraiser-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+}
+
+.fundraiser-link {
     display: block;
     color: inherit;
     text-decoration: none;
 }
 
-/* Image area */
-.fundraiser-card .img-wrapper{
-    width:100%;
-    height:160px;
-    overflow:hidden;
-    background: linear-gradient(180deg, rgba(0,0,0,0.03), transparent);
-}
-.fundraiser-card img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition: transform .35s cubic-bezier(.2,.9,.3,1);
-}
-.fundraiser-card:hover img{
-    transform: scale(1.03);
+.title {
+    margin: 0;
+    padding: 16px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
 }
 
-/* Info bar */
+.fundraiser-image-wrapper {
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* background: #eef2f5; */
+}
+
+.fundraiser-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .fundraiser-info {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    padding:12px 14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    border-top: 1px solid rgba(255,255,255,0.03);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* Title / meta */
-.fundraiser-info .title {
-    margin:0;
-    font-size:1.02rem;
-    font-weight:800;
-    color: var(--accent-b);
-    line-height:1.1;
-    flex:1 1 auto;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-}
-.fundraiser-info .meta {
-    display:flex;
-    gap:10px;
-    align-items:center;
-    flex:0 0 auto;
+.meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1rem;
 }
 
-/* Goal / likes styling */
-.fundraiser-info .goal {
-    font-weight:800;
-    color:#022827; /* strong contrast for amounts */
-    font-size:0.98rem;
-}
-.fundraiser-info .likes {
-    font-weight:700;
-    color: var(--muted, #9fb0c1);
-    font-size:0.95rem;
-    white-space:nowrap;
+.goal {
+    color: #333;
 }
 
-/* Card hover */
-.fundraiser-card:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 22px 50px rgba(11,37,69,0.12);
+.likes {
+    color: #e63946;
 }
 
-/* Compact variant (if needed inside small carousels) */
-.fundraiser-card.compact .img-wrapper{ height:120px; }
-.fundraiser-card.compact .fundraiser-info{ padding:10px; }
-
-/* Accessibility focus */
-.fundraiser-card a:focus{
-    outline: 3px solid rgba(91,209,255,0.12);
-    outline-offset:4px;
-    border-radius:10px;
+.pledged {
+    font-size: 1.1rem;
+    color: #2a9d8f;
+    font-weight: 800;
 }
 
-/* Responsive */
-@media (max-width:720px){
-    .fundraiser-card { min-height: 220px; }
-    .fundraiser-card .img-wrapper{ height:140px; }
-    .fundraiser-info .title{ font-size:0.98rem; }
-}
-
-/* reduced motion */
-@media (prefers-reduced-motion: reduce){
-    .fundraiser-card, .fundraiser-card img { transition: none !important; animation: none !important; }
+/* Responsive: stack full width on small screens */
+@media (max-width: 640px) {
+    .fundraiser-card {
+        width: 100%;
+        margin: 0.6rem 0;
+        border-radius: 8px;
+        min-height: auto;
+    }
+    .fundraiser-image-wrapper {
+        height: 200px;
+    }
 }

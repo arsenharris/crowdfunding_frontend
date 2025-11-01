@@ -60,8 +60,7 @@ function HomePage() {
 
 
     // helper to compute total pledged for sorting
-    const totalPledged = (f) =>
-        (f.pledges || []).reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
+    const totalPledged = (f) =>(f.pledges || []).reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
 
 
 
