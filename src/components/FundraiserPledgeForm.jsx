@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postPledges from "../api/post-pledges";
-import { comment } from "postcss";
 
 function PledgeForm({ fundraiserId, onSuccess, onCancel }) {
     const navigate = useNavigate();
@@ -23,31 +22,33 @@ function PledgeForm({ fundraiserId, onSuccess, onCancel }) {
     };
     
     const handleSubmit = (event) => {
-        console.log(event)
-
         event.preventDefault();
-        try {
-            new Number(pledge.amount);
-        } catch (error) {
+
+        const amountNum = Number(pledge.amount);
+        if (!pledge.amount || Number.isNaN(amountNum) || amountNum <= 0) {
             console.error("Invalid amount");
             return;
         }
-        if (pledge.amount &&
-            pledge.comment ) 
-            {
-            postPledges( 
-                fundraiserId,  
-                pledge.tier_level,
-                Number(pledge.amount),
-                pledge.comment,
-                Boolean(pledge.anonymous)
-            ).then(
-                (response) => {
-            console.log(response)
-            if (onSuccess) onSuccess();
-            // fallback reload if caller didn't handle UI update
-            navigate(`/fundraisers/${fundraiserId}`); 
-                }
+
+        postPledges(
+            fundraiserId,
+            Number(pledge.tier_level),
+            amountNum,
+            pledge.comment,
+            Boolean(pledge.anonymous)
+        )
+        .then((response) => {
+            console.log("Pledge created:", response);
+            if (onSuccess) {
+                onSuccess(response);
+            } else {
+                // fallback: navigate back to fundraiser detail
+                navigate(`/fundraisers/${fundraiserId}`);
+            }
+        })
+        .catch((err) => {
+            console.error("Failed to create pledge:", err);
+        });
     };
 
 
