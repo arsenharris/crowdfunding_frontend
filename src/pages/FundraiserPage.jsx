@@ -21,7 +21,6 @@ function FundraiserPage() {
     const { fundraiser, isLoading, error } = useFundraiser(id); // Fetches fundraiser details and loading/error states
     const [showPledgeForm, setShowPledgeForm] = useState(false); // Controls whether the pledge form is visible
     const [isDeleting, setIsDeleting] = useState(false); // Tracks if a delete request is in progress
-    const currentUsername = window.localStorage.getItem("username") || ""; // Retrieves the current logged-in username from local storage   
 
     /////// Comments /////////
     useEffect(() => { // Runs when fundraiser data updates
@@ -129,21 +128,31 @@ function FundraiserPage() {
 
 
 
+
+
+
+
+
     // owner display- this is for fundraiser detail owner ////
-    const ownerDisplay = typeof fundraiser?.owner === "object" // check if owner is an object
-    ? fundraiser.owner.username ?? "Unknown"              // if object, use username property, fallback to "Unknown"
-    : typeof fundraiser?.owner === "string"               // check if owner is a string
-        ? fundraiser.owner                                // if string, use it directly as the username
-        : "Unknown";                                      // otherwise fallback to "Unknown"
-    // owner display ended////
+    const currentUsername = window.localStorage.getItem("username") || ""; // Retrieves the current logged-in username from local storage
+    const normalize = (s) => (s || "").toString().trim().toLowerCase();
+    // keep ownerDisplay as-is (for showing on the page)
+    const ownerDisplay = typeof fundraiser?.owner === "object"
+        ? fundraiser.owner.username ?? "Unknown"
+        : typeof fundraiser?.owner === "string"
+            ? fundraiser.owner
+            : "Unknown";
+    // check if current user is the fundraiser owner
+    const isOwner = normalize(currentUsername) === normalize(ownerDisplay);
+    // Debugging logs
+    console.log("currentUsername:", currentUsername);
+    console.log("ownerDisplay:", ownerDisplay);
+    console.log("isOwner:", isOwner);
+        // owner display ended////
 
 
 
 
-    
-    //edit/ delete ownercheck///
-
-    //edit/ delete ownercheck ended///
 
 
 
@@ -169,27 +178,38 @@ function FundraiserPage() {
         setIsEditing(false);                            // Disable edit mode
         setIsSaving(false);                             // Reset saving state
     };
+
+
     const saveEdit = async () => {
-        if (!fundraiser) return;                        // Do nothing if fundraiser is missing
+        if (!fundraiser) return;
 
-        if (!editTitle.trim()) {                        // Basic validation: title must not be empty
-            alert("Title cannot be empty");            // Alert the user if title is empty
-            return;                                     // Stop save process
+        if (!editTitle.trim()) {
+            alert("Title cannot be empty");
+            return;
         }
-    const payload = {                               // Build payload to send to API
-        title: editTitle.trim(),                    // Include trimmed title
-        image: editImage.trim() || null,           // Include trimmed image or null if empty
-        goal: editGoal ? Number(editGoal) : null,  // Convert goal to number or null if empty
-    };
 
-    setIsSaving(true);                              // Set saving state to true to indicate loading
+        const payload = {
+            title: editTitle.trim(),
+            image: editImage.trim() || fundraiser.image, // Keep existing if empty
+            goal: editGoal ? Number(editGoal) : fundraiser.goal, // Keep existing if empty
+        };
+
+        setIsSaving(true);
         try {
-            await updateFundraiser(id, payload);       // Call API to update the fundraiser
-            window.location.reload();                   // Reload page to reflect changes
+            const updated = await updateFundraiser(id, payload);
+            console.log("Update successful:", updated);
+            
+            // Option 1: Reload page (current approach)
+            window.location.reload();
+            
+            // Option 2: Update local state without reload (better UX)
+            // setIsEditing(false);
+            // setIsSaving(false);
+            // Then trigger a refetch in your useFundraiser hook
         } catch (err) {
-            console.error("Failed to update fundraiser:", err); // Log error for debugging
-            alert("Could not update fundraiser: " + (err.message || "")); // Show error to user
-            setIsSaving(false);                         // Reset saving state
+            console.error("Failed to update fundraiser:", err);
+            alert("Could not update fundraiser: " + (err.message || "Unknown error"));
+            setIsSaving(false);
         }
     };
     // --- edit state  ended---
@@ -230,8 +250,16 @@ return (
                     <h3>Comments</h3>
                     <div><textarea placeholder="Write your comment here..." value={commentText} onChange={handleCommentChange}></textarea>
                     <button onClick={handleCommentSubmit} className="comment-submit-button">Submit Comment</button></div>
-                    {comments.length === 0 ? <p>No comments yet. Be the first to comment!</p> : <ul className="comment-list">{comments.map((c) => (<li key={c.id} className="comment-item">
-                        <strong>{c.user?.username}</strong>: {c.text}<br /><small>{new Date(c.date_created).toLocaleString()}</small></li>))}</ul>}
+                    {comments.length === 0 ? <p>No comments yet. Be the first to comment!</p> : 
+                    <ul className="comment-list">{comments.map((c) => (<li key={c.id} className="comment-item">
+                        <div className="comment-author">
+                            <strong>{c.user?.username ?? c.username ?? "Anonymous"}</strong>
+                        </div> 
+                        <div className="comment-text">{c.text}</div>
+                        <div className="comment-date">
+                            <small>{new Date(c.date_created).toLocaleString()}</small>
+                        </div>
+                    </li>))}</ul>}
                 </div>
                 <section className="pledges-section" aria-labelledby="pledges-heading">
                     <h3 id="pledges-heading">Pledges</h3>
@@ -247,7 +275,7 @@ return (
                 <div className="pledge-form-wrapper"><h3>Make a Pledge</h3><PledgeForm fundraiserId={id} onSuccess={() => { setShowPledgeForm(false); window.location.reload(); }} onCancel={() => setShowPledgeForm(false)} /></div>}</div>
                 <button className="back-home-button" onClick={() => navigate("/")}>Back to Home</button>
 
-                {fundraiser && ownerDisplay && (
+                {fundraiser && isOwner && (
                     !isEditing ? (
                         <div className="owner-actions">
                             <button className="update-button" onClick={startEdit} title="Update this fundraiser">Update</button>
@@ -258,9 +286,9 @@ return (
                     ) : (
                         <div className="edit-form">
                             <h3>Edit fundraiser</h3>
-                            <label>Title <input type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} /></label>
-                            <label>Image URL <input type="text" value={editImage} onChange={(e) => setEditImage(e.target.value)} /></label>
-                            <label>Goal <input type="number" value={editGoal} onChange={(e) => setEditGoal(e.target.value)} /></label>
+                            <label className="edit-label">Title <input className="edit-input" type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} /></label>
+                            <label className="edit-label">Image URL <input className="edit-input" type="text" value={editImage} onChange={(e) => setEditImage(e.target.value)} /></label>
+                            <label className="edit-label">Goal <input className="edit-input" type="number" value={editGoal} onChange={(e) => setEditGoal(e.target.value)} /></label>
                             <div className="edit-actions">
                                 <button onClick={saveEdit} disabled={isSaving}>{isSaving ? "Saving…" : "Save"}</button>
                                 <button onClick={cancelEdit} disabled={isSaving}>Cancel</button>

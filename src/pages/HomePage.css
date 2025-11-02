@@ -150,7 +150,7 @@ body{
     box-shadow: 0 6px 18px rgba(11,37,69,0.03) inset;
     font-size:0.95rem;
     transition: box-shadow 0.12s ease, transform 0.08s ease;
-    color: var(--text, #000);
+    color: var(black, #000);
     margin-right:12px;
 }
 .search-input:focus{

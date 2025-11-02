@@ -9,9 +9,7 @@ async function updateFundraiser(id, data) {
             "Content-Type": "application/json",
             "Authorization": `Token ${token}`
         },
-        body: JSON.stringify({
-            data
-        }),
+        body: JSON.stringify(data),
     });
 
     if (!response.ok) {

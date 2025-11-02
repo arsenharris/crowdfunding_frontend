@@ -252,6 +252,31 @@
     font-size: 0.95rem;
 }
 /* Comments */
+.comment-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 8px;
+}
+
+.comment-author strong {
+    color: var(--accent-b);
+    font-size: 0.92rem;
+}
+
+.comment-text {
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.comment-date small {
+    color: var(--muted);
+    font-size: 0.86rem;
+}
 .comments-section{
     margin-top:1rem;
     padding:16px;
@@ -294,33 +319,178 @@
 .comment-item small{ color:var(--muted); font-size:0.86rem; }
 
 /* Delete button (prominent but styled) */
-.delete-button{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
-    color:#fff;
-    padding:10px 16px;
-    border:none;
-    border-radius:10px;
-    font-weight:700;
-    cursor:pointer;
-    box-shadow:0 8px 20px rgba(185,28,28,0.12);
+/* Owner actions section */
+.owner-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.03);
+}
+
+/* Update button (accent gradient, glassmorphic) */
+.update-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+    color: #022827;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(2, 8, 20, 0.12);
+    transition: transform .14s ease, box-shadow .14s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.update-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.update-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(2, 8, 20, 0.18);
+}
+
+.update-button:hover::before {
+    opacity: 1;
+}
+
+.update-button:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+/* Delete button - keep existing styles but ensure consistency */
+.delete-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(185,28,28,0.12);
     transition: transform .14s ease, box-shadow .14s ease, opacity .14s ease;
 }
-.delete-button:hover{
-    transform:translateY(-3px);
-    box-shadow:0 18px 40px rgba(185,28,28,0.18);
+
+.delete-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(185,28,28,0.18);
 }
-.delete-button:active{
-    transform:translateY(-1px) scale(.995);
+
+.delete-button:active {
+    transform: translateY(-1px) scale(0.98);
 }
+
 .delete-button[disabled],
-.delete-button[aria-disabled="true"]{
-    opacity:0.5;
-    cursor:not-allowed;
-    transform:none;
-    box-shadow:none;
+.delete-button[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+.edit-form {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 20px rgba(2,8,20,0.12);
+}
+
+.edit-form h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    color: var(--accent-b);
+    font-weight: 800;
+}
+
+.edit-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text);
+}
+
+.edit-input {
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: var(--accent-a);
+    background: rgba(255,255,255,0.04);
+    box-shadow: 0 0 0 3px rgba(26,188,156,0.1);
+}
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.edit-actions button {
+    flex: 1;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: transform .14s ease, box-shadow .14s ease, opacity .14s ease;
+}
+
+.edit-actions button:first-child {
+    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+    color: #022827;
+    box-shadow: 0 6px 18px rgba(2,8,20,0.1);
+}
+
+.edit-actions button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(2,8,20,0.14);
+}
+
+.edit-actions button:last-child {
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.edit-actions button:last-child:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+}
+
+.edit-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
 }
 /* small screens */
 @media (max-width:420px){

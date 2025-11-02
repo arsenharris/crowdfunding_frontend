@@ -4,14 +4,23 @@ import postLogin from "../api/post-login";
 import "./LoginForm.css";
 
 function LoginForm() {
+    const [usernameInput, setUsernameInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({
         username: "",
         password: "",
     });
 
-    const handleChange = (event) => {
+    const handleChange = async (event) => {
         const { id, value } = event.target;
+            try {
+        const data = await postLogin(usernameInput, passwordInput);
+        console.log("Login successful, localStorage should have username now:", localStorage.getItem("username"));
+        // redirect or update state
+        } catch (err) {
+            console.error(err);
+        }
         setCredentials(prevCredentials => ({
             ...prevCredentials,
             [id]: value
@@ -50,3 +59,4 @@ function LoginForm() {
 }
 
 export default LoginForm;
+
