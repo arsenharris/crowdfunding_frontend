@@ -1,4 +1,4 @@
-# Inkvestor (InkVSTR) — Crowdfunding for Creators
+# Inkvestor — Crowdfunding for Authours
 A minimal crowdfunding frontend built with React that talks to a Django REST Framework API.
 
 
@@ -7,15 +7,15 @@ A minimal crowdfunding frontend built with React that talks to a Django REST Fra
 - [x] Be separated into two distinct projects: an API built using the Django Rest Framework and a website built using React.
 
         For front end use this link
-        [https://inkvestor2.netlify.app/]
+    [https://inkvestor2.netlify.app/]
 
         For backend use below link
-        [https://inkvestor-40ee966b1650.herokuapp.com]
+    [https://inkvestor-40ee966b1650.herokuapp.com]
 
 
 - [x]  Have a cool name, bonus points if it includes a pun and/or missing vowels. See https://namelix.com/ for inspiration. (Bonus Points are meaningless)
 
-        see above link
+        see above 
 
 
  - [x] Have a clear target audience.
@@ -64,7 +64,7 @@ When you are making a pledge it asks amount, you already pick the fundraiser, it
 
  - [x] Implement suitable update/delete functionality, e.g. should a fundraiser owner be allowed to update its description?
 
-        Still in progress
+        For delete see below.
 
 
 
@@ -72,7 +72,9 @@ When you are making a pledge it asks amount, you already pick the fundraiser, it
 
  - [x] Implement suitable permissions, e.g. who is allowed to delete a pledge?
 
-        Still in progress
+![delete your own fundriaser](src/assets/screenshots/delete-fundraiser.png)
+![delete others fundriaser is not allowered](src/assets/screenshots/delete-fundraiser-others.png)
+
 
 
 
