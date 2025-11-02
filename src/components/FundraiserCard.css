@@ -1,20 +1,3 @@
-.fundraiser-card {
-    width: 360px;
-    max-width: 100%;
-    min-height: 440px;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    margin: 1rem;
-    background: #a5c9ec;
-    transition: transform 150ms ease, box-shadow 150ms ease;
-}
-
-.fundraiser-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
-}
 
 .fundraiser-link {
     display: block;
@@ -25,33 +8,35 @@
 .title {
     margin: 0;
     padding: 16px;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 700;
     text-align: center;
-    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(0,0,0,0.05));
+    border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
 .fundraiser-image-wrapper {
-    height: 240px;
+    height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    /* background: #eef2f5; */
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 0.75rem;
 }
 
-.fundraiser-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+
+
+.fundraiser-card:hover .fundraiser-image {
+    transform: scale(1.05);
 }
 
 .fundraiser-info {
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    flex-grow: 1;
 }
 
 .meta-row {
@@ -60,20 +45,34 @@
     align-items: center;
     font-weight: 600;
     font-size: 1rem;
+    color: #333;
 }
 
 .goal {
-    color: #333;
+    color: #264653;
+    font-weight: 700;
 }
 
 .likes {
     color: #e63946;
+    font-weight: 700;
 }
 
 .pledged {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #2a9d8f;
     font-weight: 800;
+    text-align: right;
+}
+
+/* Optional: add separate background for pledge info */
+.pledge-section {
+    background: rgba(255,255,255,0.15);
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Responsive: stack full width on small screens */
@@ -81,7 +80,7 @@
     .fundraiser-card {
         width: 100%;
         margin: 0.6rem 0;
-        border-radius: 8px;
+        border-radius: 12px;
         min-height: auto;
     }
     .fundraiser-image-wrapper {

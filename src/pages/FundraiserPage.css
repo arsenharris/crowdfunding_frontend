@@ -1,505 +1,453 @@
-.fundraiser-page{
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-    max-width:1200px;
-    margin:28px auto;
-    padding:16px;
-    font-family: var(--font-sans, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
-    color: var(--text);
-}
-
-/* Image column (glass framed) */
-.fundraiser-image{
-    position:relative;
-    flex:0 0 auto;
-    width:100%;
-    border-radius:var(--radius,12px);
-    overflow:hidden;
-    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
-    border: 1px solid rgba(255,255,255,0.03);
-    box-shadow: var(--shadow-lg, 0 18px 50px rgba(2,8,20,0.35));
-}
-.fundraiser-image img{
-    width:100%;
-    height:auto;
-    max-height:420px;
-    object-fit:cover;
-    object-position:50% 50%;
-    display:block;
-    transition: transform .35s cubic-bezier(.2,.9,.3,1);
-}
-.fundraiser-image:hover img{ transform: scale(1.02); }
-
-/* Title overlay on image */
-.image-title{
-    position:absolute;
-    left:20px;
-    right:20px;
-    top:20px;
-    padding:10px 14px;
-    background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06));
-    border-radius:12px;
-    color: var(--text);
-    display:flex;
-    align-items:flex-start;
-    gap:12px;
-    z-index:3;
-    backdrop-filter: blur(calc(var(--glass-blur,12px) / 2));
-}
-.image-title h1{
-    margin:0;
-    font-size:clamp(18px,2.6vw,28px);
-    font-weight:900;
-    line-height:1.05;
-    color: var(--accent-b);
-    -webkit-font-smoothing:antialiased;
-}
-
-/* Details column */
-.fundraiser-details{
-    flex:1 1 420px;
-    min-width:300px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    color:var(--text);
-}
-.fundraiser-details h1{
-    margin:0 0 6px 0;
-    font-size:1.4rem;
-    color: var(--accent-b);
-    font-weight:800;
-}
-.fundraiser-details p{
-    margin:0;
-    color:var(--muted);
-    line-height:1.45;
-    font-size:0.98rem;
-}
-.fundraiser-details p strong{
-    color:var(--text);
-    font-weight:700;
-}
-.fundraiser-details h3{
-    margin:6px 0;
-    color: var(--accent-b);
-    font-weight:700;
-    font-size:1rem;
-}
-
-/* page layout sections */
-.top-side{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    align-items:stretch;
-}
-.right-side{
-    flex:1 1 auto;
-    padding:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    gap:12px;
-}
-
-/* Bottom card: glass panel with subtle elevation */
-.bottom-side{
-    width:100%;
-    margin-top:24px;
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
-    padding:20px;
-    border-radius:var(--radius);
-    border:1px solid rgba(255,255,255,0.03);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Responsive adjustments */
-@media (min-width:700px){
-    .top-side{ flex-direction:row; align-items:flex-start; gap:24px; }
-    .fundraiser-image{ flex:0 0 380px; width:auto; }
-    .fundraiser-image img{ max-height:340px; }
-    .right-side{ padding-left:18px; flex:1 1 520px; }
-}
-
-/* likes / actions (inline) */
-.image-likes{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-.like-button{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 12px;
-    border-radius:12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    border:1px solid rgba(255,255,255,0.03);
-    color:var(--text);
-    cursor:pointer;
-    transition: transform .16s ease, box-shadow .16s ease;
-}
-.like-button:hover{ transform:translateY(-4px); box-shadow:0 12px 30px rgba(2,8,20,0.12); }
-.likes-count{ font-weight:700; color:var(--muted); }
-
-/* back button */
-.back-button{
-    padding:8px 16px;
-    border-radius:10px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    border:1px solid rgba(255,255,255,0.03);
-    color:var(--text);
-    cursor:pointer;
-}
-.back-button:hover{ transform:translateY(-3px); box-shadow:0 8px 22px rgba(2,8,20,0.08); }
-
-/* Progress bar (glass-friendly, accent gradient) */
-.progress-section{ border-top: 1px solid rgba(255,255,255,0.03); padding-top:16px; }
-.progress-container{
-    --progress-height:20px;
-    width:100%;
-    max-width:520px;
-    margin:0.6rem 0 1rem;
-    background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(0,0,0,0.02));
-    border-radius:12px;
-    padding:3px;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
-    position:relative;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,0.03);
-}
-.progress-bar{
-    height:var(--progress-height);
-    display:flex;
-    align-items:center;
-    justify-content:flex-end;
-    padding-right:10px;
-    box-sizing:border-box;
-    color:#022827;
-    font-weight:700;
-    font-size:0.9rem;
-    line-height:1;
-    border-radius:999px;
-    transition: width 700ms cubic-bezier(.2,.9,.2,1), background 300ms ease;
-    min-width:36px;
-    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-    position:relative;
-    text-shadow:none;
-}
-.progress-bar::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image: linear-gradient(135deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.04) 75%, transparent 75%, transparent);
-    background-size:24px 24px;
-    opacity:0.45;
-    pointer-events:none;
-    animation: stripeMove 3s linear infinite;
-    border-radius:inherit;
-}
-.progress-bar[aria-valuenow="100"]{
-    background: linear-gradient(90deg, #16a34a 0%, #4ade80 100%);
-    box-shadow:0 0 0 6px rgba(34,197,94,0.06);
-}
-.progress-label{ display:inline-block; padding:0 6px; white-space:nowrap; color:#022827; }
-
-/* Meta line */
-.progress-meta{
-    margin-top:0.45rem;
-    display:flex;
-    gap:0.75rem;
-    align-items:baseline;
-    font-size:0.9rem;
-    color:var(--muted);
-}
-.progress-meta small{ display:block; }
-
-/* Pledges list */
-.pledges-section{ margin-top:10px; }
-.pledges-list{
-    list-style:none;
-    padding:0;
-    margin:8px 0 0 0;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-}
-.pledge-item{
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-    border:1px solid rgba(255,255,255,0.03);
-    padding:12px;
-    border-radius:12px;
-    display:flex;
-    justify-content:space-between;
-    gap:8px;
-    align-items:center;
-    font-weight:700;
-    color:var(--text);
-    transition: transform .14s ease, box-shadow .14s ease;
-}
-.pledge-item:hover{ transform:translateY(-6px); box-shadow:0 12px 34px rgba(2,8,20,0.12); }
-
-
-.pledge-comment {
-    white-space: pre-wrap; /* preserve line breaks */
-    margin: 0.25rem 0 0.5rem 0;
-    color: #444;
-    font-size: 0.95rem;
-}
-/* Comments */
-.comment-item {
+/* --- Base Layout --- */
+.fundraiser-page {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: 12px;
-    margin-bottom: 10px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.04);
-    border-radius: 8px;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 16px;
+    font-family: var(--font-sans, 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial);
+    color: #ffffff; /* all text white */
+    box-sizing: border-box;
+    background: none; /* keep original background */
 }
 
-.comment-author strong {
-    color: var(--accent-b);
-    font-size: 0.92rem;
-}
-
-.comment-text {
-    color: var(--text);
-    line-height: 1.5;
-}
-
-.comment-date small {
-    color: var(--muted);
-    font-size: 0.86rem;
-}
-.comments-section{
-    margin-top:1rem;
-    padding:16px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.03);
-    box-shadow:0 8px 24px rgba(2,8,20,0.06);
-}
-.comments-section h3{ margin:0 0 8px 0; font-size:1.05rem; color:var(--accent-b); }
-.comments-section textarea{
-    width:100%;
-    min-height:80px;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.04);
-    background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(0,0,0,0.02));
-    color:var(--text);
-    resize:vertical;
-    font-family:inherit;
-}
-.comment-submit-button{
-    align-self:flex-end;
-    padding:8px 16px;
-    border:none;
-    border-radius:10px;
-    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-    color:#022827;
-    cursor:pointer;
-    font-weight:700;
-}
-.comment-submit-button:hover{ transform:translateY(-3px); box-shadow:0 10px 30px rgba(2,8,20,0.08); }
-.comment-list{ list-style:none; padding:0; margin-top:12px; }
-.comment-item{
-    background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(0,0,0,0.02));
-    padding:10px 12px;
-    border-radius:10px;
-    margin-bottom:8px;
-    color:var(--text);
-}
-.comment-item small{ color:var(--muted); font-size:0.86rem; }
-
-/* Delete button (prominent but styled) */
-/* Owner actions section */
-.owner-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255,255,255,0.03);
-}
-
-/* Update button (accent gradient, glassmorphic) */
-.update-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-    color: #022827;
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(2, 8, 20, 0.12);
-    transition: transform .14s ease, box-shadow .14s ease;
+/* --- Image Column (Glass Framed) --- */
+.fundraiser-image {
     position: relative;
+    flex: 0 0 auto;
+    width: 100%;
+    border-radius: var(--radius, 12px);
     overflow: hidden;
-}
-
-.update-button::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
-    opacity: 0;
-    transition: opacity .2s ease;
-}
-
-.update-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(2, 8, 20, 0.18);
-}
-
-.update-button:hover::before {
-    opacity: 1;
-}
-
-.update-button:active {
-    transform: translateY(-1px) scale(0.98);
-}
-
-/* Delete button - keep existing styles but ensure consistency */
-.delete-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(185,28,28,0.12);
-    transition: transform .14s ease, box-shadow .14s ease, opacity .14s ease;
-}
-
-.delete-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(185,28,28,0.18);
-}
-
-.delete-button:active {
-    transform: translateY(-1px) scale(0.98);
-}
-
-.delete-button[disabled],
-.delete-button[aria-disabled="true"] {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-
-.edit-form {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 12px;
     background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
     border: 1px solid rgba(255,255,255,0.03);
-    box-shadow: 0 8px 20px rgba(2,8,20,0.12);
+    box-shadow: 0 18px 50px rgba(2, 8, 20, 0.35);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.fundraiser-image img {
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 12px;
+    transition: transform 0.35s cubic-bezier(.2,.9,.3,1);
+}
+.fundraiser-image:hover img {
+    transform: scale(1.04);
 }
 
-.edit-form h3 {
-    margin: 0 0 16px 0;
-    font-size: 1.1rem;
-    color: var(--accent-b);
+/* --- Title Overlay --- */
+.image-title {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    padding: 10px 14px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.08));
+    border-radius: 12px;
+    color: #ffffff;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    z-index: 3;
+    backdrop-filter: blur(6px);
+}
+.image-title h1 {
+    margin: 0;
+    font-size: clamp(18px, 2.6vw, 28px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.25);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Details Column --- */
+.fundraiser-details {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: #ffffff;
+}
+.fundraiser-details h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.4rem;
+    color: #ffffff;
     font-weight: 800;
 }
+.fundraiser-details p {
+    margin: 0;
+    color: #ffffff;
+    line-height: 1.45;
+    font-size: 0.98rem;
+}
+.fundraiser-details p strong {
+    color: #ffffff;
+    font-weight: 700;
+}
 
+/* --- Layout Sections --- */
+.top-side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.right-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- Bottom Side (Glass Panel) --- */
+.bottom-side {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 18px 50px rgba(2, 8, 20, 0.28);
+}
+
+/* --- Likes & Comments --- */
+.image-likes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.like-button {
+    background: linear-gradient(135deg, #00bcd4, #3f51b5);
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.like-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(63, 81, 181, 0.35);
+}
+.like-button svg {
+    color: #ffffff;
+}
+.likes-count {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.comments-section h3 {
+    color: #ffffff;
+    font-weight: 700;
+}
+.comments-section textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background-color: rgba(0,0,0,0.2);
+    font-size: 0.95rem;
+    color: #ffffff;
+    resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.comments-section textarea:focus {
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(255,255,255,0.25);
+}
+.comment-submit-button {
+    margin-top: 8px;
+    background: linear-gradient(135deg, #3f51b5, #00bcd4);
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.comment-submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,188,212,0.25);
+}
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.comment-item {
+    background: rgba(245,248,250,0.1);
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.comment-author strong {
+    color: #ffffff;
+}
+.comment-text {
+    margin-top: 4px;
+    color: #ffffff;
+}
+
+/* --- Pledges Section --- */
+.pledges-section {
+    background: rgba(255, 255, 255, 0.08); /* lighter than bottom-side */
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+.pledges-section h3 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.pledge-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+.pledge-stats .pledge-count,
+.pledge-stats .pledge-total {
+    background: linear-gradient(135deg, #00bcd4, #3f51b5);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.pledge-item {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.05);
+    color: #ffffff;
+}
+.pledge-main {
+    font-weight: 700;
+    color: #ffffff;
+}
+.pledge-comment {
+    font-style: italic;
+    color: #ffffff;
+}
+.pledge-meta small {
+    color: #ffffff;
+}
+
+/* --- Make Pledge Button --- */
+.open-pledge-button {
+    background: linear-gradient(135deg, #00bcd4, #3f51b5);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.open-pledge-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,188,212,0.25);
+}
+
+/* --- Back to Home Button --- */
+.back-home-button {
+    background: #2c2f38;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #ffffff;
+}
+.back-home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255,255,255,0.15);
+}
+
+/* --- Owner Actions --- */
+.owner-actions button {
+    background: linear-gradient(135deg, #3f51b5, #00bcd4);
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 8px;
+}
+.owner-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,188,212,0.35);
+}
+.delete-button {
+    background: linear-gradient(135deg, #d64545, #ff6f6f);
+}
+.delete-button:hover {
+    box-shadow: 0 6px 18px rgba(214,69,69,0.35);
+}
+
+/* --- Edit Form --- */
+.edit-form {
+    background: rgba(245,248,250,0.1);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: #ffffff;
+}
 .edit-label {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 14px;
     font-weight: 600;
-    font-size: 0.92rem;
-    color: var(--text);
+    color: #ffffff;
+    gap: 4px;
 }
-
 .edit-input {
-    padding: 10px 14px;
-    border: 1px solid rgba(255,255,255,0.06);
+    padding: 8px 10px;
     border-radius: 8px;
-    background: rgba(255,255,255,0.02);
-    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.3);
     font-size: 0.95rem;
-    font-family: inherit;
-    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    color: #ffffff;
+    background-color: rgba(0,0,0,0.2);
 }
-
 .edit-input:focus {
     outline: none;
-    border-color: var(--accent-a);
-    background: rgba(255,255,255,0.04);
-    box-shadow: 0 0 0 3px rgba(26,188,156,0.1);
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(255,255,255,0.25);
 }
-
-.edit-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 18px;
-}
-
 .edit-actions button {
-    flex: 1;
-    padding: 10px 18px;
+    background: linear-gradient(135deg, #3f51b5, #00bcd4);
+    color: #ffffff;
     border: none;
+    padding: 8px 14px;
     border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.92rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: transform .14s ease, box-shadow .14s ease, opacity .14s ease;
+    margin-right: 8px;
 }
-
-.edit-actions button:first-child {
-    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-    color: #022827;
-    box-shadow: 0 6px 18px rgba(2,8,20,0.1);
-}
-
-.edit-actions button:first-child:hover {
+.edit-actions button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(2,8,20,0.14);
+    box-shadow: 0 6px 12px rgba(0,188,212,0.25);
 }
 
-.edit-actions button:last-child {
-    background: rgba(255,255,255,0.04);
-    color: var(--muted);
-    border: 1px solid rgba(255,255,255,0.08);
+/* --- Progress Bar --- */
+.progress-container {
+    margin-top: 10px;
+}
+.progress-bar {
+    height: 18px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+    position: relative;
+}
+.progress-bar span.progress-label {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    line-height: 18px;
+}
+.progress-bar[role="progressbar"] {
+    background: linear-gradient(90deg, #00bcd4, #3f51b5);
+}
+.progress-meta small {
+    color: #ffffff;
 }
 
-.edit-actions button:last-child:hover {
-    background: rgba(255,255,255,0.06);
-    color: var(--text);
+/* --- Responsive Breakpoints --- */
+@media (min-width: 700px) {
+    .top-side {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 24px;
+    }
+    .fundraiser-image {
+        flex: 0 0 380px;
+        width: auto;
+    }
+    .fundraiser-image img {
+        max-height: 340px;
+    }
+    .right-side {
+        padding-left: 18px;
+    }
 }
-
-.edit-actions button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
+@media (min-width: 900px) {
+    .fundraiser-page {
+        padding: 24px;
+    }
+    .fundraiser-details h1 {
+        font-size: 1.6rem;
+    }
 }
-/* small screens */
-@media (max-width:420px){
-    .progress-container{ max-width:100%; }
-    .progress-bar{ min-width:28px; padding-right:8px; }
-    .progress-label{ font-size:0.78rem; }
+@media (min-width: 1200px) {
+    .fundraiser-page {
+        flex-direction: column;
+        gap: 32px;
+        padding: 32px;
+    }
+    .top-side {
+        gap: 32px;
+    }
 }
-
-/* reduced motion respect */
-@media (prefers-reduced-motion: reduce){
-  *{ transition:none !important; animation:none !important; }
+@media (max-width: 480px) {
+    .fundraiser-page {
+        padding: 10px;
+        gap: 16px;
+    }
+    .image-title h1 {
+        font-size: 1rem;
+    }
+    .update-button,
+    .delete-button {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    .owner-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .edit-form {
+        padding: 12px;
+    }
+    .fundraiser-image img {
+        max-height: 260px;
+    }
+}
+@media (max-width: 360px) {
+    .fundraiser-details h1 {
+        font-size: 1.1rem;
+    }
+    .progress-label {
+        font-size: 0.78rem;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
 }

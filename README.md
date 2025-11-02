@@ -66,6 +66,14 @@ When you are making a pledge it asks amount, you already pick the fundraiser, it
 
         For delete see below.
 
+    You can update your own fundraiser. You see update and delete button
+![update your own fundriaser](src/assets/screenshots/update-fundraiser.png)
+
+    you can type whatever you want to update to
+![update your own fundriaser](src/assets/screenshots/update-button.png)
+    This is what it looks like after update
+![update your own fundriaser](src/assets/screenshots/after-update.png)
+
 
 
 
@@ -73,10 +81,9 @@ When you are making a pledge it asks amount, you already pick the fundraiser, it
  - [x] Implement suitable permissions, e.g. who is allowed to delete a pledge?
 
 ![delete your own fundriaser](src/assets/screenshots/delete-fundraiser.png)
+
+You can change title, goal, description, url etc.
 ![delete others fundriaser is not allowered](src/assets/screenshots/delete-fundraiser-others.png)
-
-
-
 
 
  - [x] Return the relevant status codes for both successful and unsuccessful requests to the API.

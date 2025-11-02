@@ -58,11 +58,11 @@ function RegisterForm() {
         <form className="register-form" onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="username">Username:</label>
-                <input className="form-input" type="text" id="username" placeholder="Enter username" onChange={handleChange} />
+                <input className="form-input"  id="username" placeholder="Enter username" onChange={handleChange} />
             </div>
             <div className="form-group">
                 <label htmlFor="email">Email:</label>
-                <input className="form-input" type="text" id="email" placeholder="Enter email" onChange={handleChange} />
+                <input className="form-input"  id="email" placeholder="Enter email" onChange={handleChange} />
             </div>            
             <div className="form-group">
                 <label htmlFor="password">Password:</label>

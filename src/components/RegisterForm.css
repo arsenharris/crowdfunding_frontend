@@ -1,74 +1,108 @@
+/* --- Register Form (updated to match FundraiserForm style) --- */
 .register-form {
     max-width: 520px;
     margin: 2rem auto;
     padding: 2rem;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(16,24,40,0.06);
-    color: #0f172a;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 12px 36px rgba(2,8,20,0.06);
+    color: #ffffff;
+    font-family: var(--font-sans, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
+/* Form groups */
 .register-form .form-group {
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
+/* Labels */
 .register-form label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-weight: 600;
-    color: #0f172a;
+    font-weight: 700;
+    color: #ffffff;
 }
 
-/* unified input styles for username, email, password */
-.register-form .form-input {
+/* Unified input styles for all input fields and textarea */
+.register-form .form-input,
+.register-form textarea,
+.register-form select {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e6e9ef;
+    padding: 10px 12px;
     border-radius: 10px;
+    border: 1px solid rgba(11,37,69,0.06);
+    background: #ffffff; /* white background like goal field */
+    color: #022827; /* dark text for typing */
     font-size: 1rem;
-    background-color: #ffffff; /* explicit white for all inputs */
-    box-shadow: inset 0 1px 2px rgba(16,24,40,0.03);
+    font-family: inherit;
+    box-shadow: inset 0 1px 2px rgba(2,8,20,0.03);
     transition: border-color 150ms ease, box-shadow 150ms ease, transform 100ms ease;
-    color: #0f172a;
 }
 
-.register-form .form-input::placeholder {
+/* Placeholder */
+.register-form .form-input::placeholder,
+.register-form textarea::placeholder {
     color: #9aa4b2;
 }
 
-.register-form .form-input:focus {
-    border-color: #4f46e5;
+/* Focus states */
+.register-form .form-input:focus,
+.register-form textarea:focus,
+.register-form select:focus {
     outline: none;
-    box-shadow: 0 0 0 6px rgba(79,70,229,0.06);
+    border-color: rgba(91,209,255,0.22);
+    box-shadow: 0 8px 30px rgba(91,209,255,0.08);
     transform: translateY(-1px);
 }
 
-/* Ensure password input (and other inputs) keep white background when browser autofills */
+/* Autofill fix for white background */
 .register-form .form-input:-webkit-autofill,
 .register-form .form-input:-webkit-autofill:focus,
 .register-form .form-input:-webkit-autofill:hover,
-.register-form .form-input:-webkit-autofill:active {
+.register-form .form-input:-webkit-autofill:active,
+.register-form textarea:-webkit-autofill,
+.register-form select:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
     box-shadow: 0 0 0px 1000px #ffffff inset !important;
-    -webkit-text-fill-color: #0f172a !important;
+    -webkit-text-fill-color: #022827 !important;
 }
 
-/* Submit button inside register form */
+/* Submit button */
 .register-form .submit-btn {
-    display: inline-block;
-    background: linear-gradient(180deg,#4f46e5,#3730a3);
-    color: #fff;
-    padding: 0.6rem 0.9rem;
-    border-radius: 10px;
-    border: none;
-    font-weight: 700;
+    align-self: flex-start;
+    background: linear-gradient(90deg, var(--accent-a, #7af5d1), var(--accent-b, #5bd1ff));
+    color: #022827;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 800;
+    border: 0;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(79,70,229,0.12);
-    margin-top: 0.5rem;
+    box-shadow: 0 12px 30px rgba(90,200,180,0.10);
+    transition: transform 100ms ease, box-shadow 150ms ease;
 }
 
-/* small responsive tweak */
-@media (max-width: 520px) {
-    .register-form { margin: 1rem; padding: 1rem; }
+.register-form .submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(90,200,180,0.15);
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+    .register-form {
+        padding: 14px;
+        gap: 12px;
+    }
+    .register-form .form-input,
+    .register-form textarea,
+    .register-form select {
+        font-size: 0.95rem;
+    }
+    .register-form .submit-btn {
+        font-size: 0.95rem;
+        padding: 8px 14px;
+    }
 }

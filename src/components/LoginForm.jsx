@@ -44,16 +44,16 @@ function LoginForm() {
 
 
     return (
-        <form>
-            <div>
+        <form className="login-form">
+            <div className="form-group">
                 <label htmlFor="username">Username:</label>
-                <input type="text" id="username" placeholder="Enter username" onChange={handleChange} />
+                <input className="form-input" id="username" placeholder="Enter username" onChange={handleChange} />
             </div>
-            <div>
+            <div className="form-group">
                 <label htmlFor="password">Password:</label>
-                <input type="password" id="password" placeholder="Password" onChange={handleChange}/>
+                <input className="form-input" type="password" id="password" placeholder="Password" onChange={handleChange}/>
             </div>
-            <button type="submit" onClick={handleSubmit}> Login</button>
+            <button className="submit-btn" type="submit" onClick={handleSubmit}> Login</button>
         </form>
     );
 }

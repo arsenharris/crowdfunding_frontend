@@ -156,7 +156,8 @@ function HomePage() {
                     </div>
                 </section>
             )}
-            
+            <section className="all-fundraisers-section">
+            <h2>All Fundraisers</h2>
             <div id="fundraiser-list">
                 {sortedFundraisers.length === 0 ? (
                     <p>No fundraisers found.</p>
@@ -166,6 +167,7 @@ function HomePage() {
                     ))
                 )}                
             </div>
+            </section>
             <Footer />
         </div>
     );
