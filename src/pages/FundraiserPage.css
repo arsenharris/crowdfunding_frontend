@@ -205,10 +205,14 @@
 
 /* --- Pledges Section --- */
 .pledges-section {
-    background: rgba(255, 255, 255, 0.08); /* lighter than bottom-side */
-    padding: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 18px 50px rgba(2, 8, 20, 0.28);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 .pledges-section h3 {
     color: #ffffff;
@@ -232,12 +236,13 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 .pledge-item {
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 8px;
     background: rgba(255,255,255,0.05);
-    color: #ffffff;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 .pledge-main {
     font-weight: 700;
@@ -249,6 +254,64 @@
 }
 .pledge-meta small {
     color: #ffffff;
+}
+
+/* --- Make Pledge Section / Form Wrapper --- */
+.make-pledge-area,
+.pledge-form-wrapper {
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 18px 50px rgba(2, 8, 20, 0.28);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- Pledge Form Heading --- */
+.pledge-form-wrapper h3 {
+    margin: 0 0 12px 0;
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 1.25rem;
+}
+
+/* --- Pledge Input Fields --- */
+.pledge-form-wrapper input,
+.pledge-form-wrapper textarea,
+.pledge-form-wrapper select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background-color: #ffffff; /* white background for inputs/textarea/dropdown */
+    color: #000000;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.pledge-form-wrapper input:focus,
+.pledge-form-wrapper textarea:focus,
+.pledge-form-wrapper select:focus {
+    border-color: #00bcd4;
+    box-shadow: 0 0 8px rgba(0,188,212,0.25);
+}
+
+/* --- Submit / Cancel Buttons --- */
+.pledge-form-wrapper button {
+    background: linear-gradient(135deg, #00bcd4, #3f51b5);
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pledge-form-wrapper button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,188,212,0.35);
 }
 
 /* --- Make Pledge Button --- */
