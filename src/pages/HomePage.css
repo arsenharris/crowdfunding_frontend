@@ -1,3 +1,11 @@
+:root {
+    --bg-1: #071028;
+    --bg-2: #061122;
+    --accent-b: #5bd1ff;
+    --text: #eaf6f8;
+    --muted: #9fb0c1;
+}
+
 body {
 background: linear-gradient(180deg, var(--bg-1, #f8fafc) 0%, var(--bg-2, #ffffff) 100%);
 -webkit-font-smoothing: antialiased;

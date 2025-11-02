@@ -70,7 +70,7 @@ gap:12px;
 
 /* compact login/register links */
 .navbar-right a{
-color: var(--text, #000);
+color: var(--accent-b);
 text-decoration:none;
 font-weight:700;
 padding:8px 12px;
@@ -229,8 +229,7 @@ transition: all 0.3s ease;
     background: none;
     border: none;
     cursor: pointer;
-    stroke: #0b2545; /* dark color */
-    color: aqua;
+    color: var(--accent-b);
     padding: 4px;
 }
 
@@ -259,7 +258,7 @@ gap:8px;
 padding:10px 12px;
 height:auto;
 }
-
+}
 
 @media (max-width: 820px) {
 .hamburger-button {
@@ -292,7 +291,7 @@ justify-content: center;
     text-align: center;
     padding: 12px;
     font-size: 1rem;
-    color: var(--text, #0b2545);
+    color: var(--accent-b);
     background: transparent;
 }
 
