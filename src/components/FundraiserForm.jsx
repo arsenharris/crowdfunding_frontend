@@ -9,52 +9,63 @@ function FundraiserForm() {
         title: "",
         description: "",
         goal: "",
-        image: "",
+        image: null,
         genre_type: "",
     });
-
+    
     const handleChange = (event) => {
-        const { id, name, value } = event.target;
+        const { id, name, value, files, type } = event.target;
         const key = name || id;
-        setFundraiser(prevFundraiser => ({
-            ...prevFundraiser,
-            // [id]: value
-        [key]: value
-        }));
+        if (type === "file") {
+            setFundraiser(prev => ({ ...prev, [key]: files && files[0] ? files[0] : null }));
+            return;
+        }
+        setFundraiser(prevFundraiser => ({ ...prevFundraiser, [key]: value }));
     };
 
     const handleSubmit = (event) => {
-        console.log(event)
-
         event.preventDefault();
-        try {
-            new URL(fundraiser.image);
-        } catch (error) {
-            console.error("Invalid image URL");
+        console.log("Submitted image:", fundraiser.image);
+
+        if (!fundraiser.genre_type) {
+            console.error("Genre type is required");
             return;
         }
-        if ( 
-            fundraiser.title && 
-            fundraiser.description && 
-            fundraiser.goal && 
-            fundraiser.image && 
-            fundraiser.genre_type ) 
-            {
-            postFundraiser( 
-                fundraiser.title,  
-                fundraiser.description,
-                Number(fundraiser.goal),
-                fundraiser.image,
-                fundraiser.genre_type
-            ).then(
-                (response) => {
-            console.log(response)
-            navigate("/");});
-        
 
+        const goalInt = parseInt(fundraiser.goal, 10);
+        if (isNaN(goalInt)) {
+            console.error("Goal must be a number");
+            return;
         }
+        if (!fundraiser.image) {
+            console.error("Image file is required");
+            return;
+        }
+
+
+        const formData = new FormData();
+        formData.append("title", fundraiser.title);
+        formData.append("description", fundraiser.description);
+        formData.append("goal", goalInt);
+        formData.append("genre_type", fundraiser.genre_type);
+        formData.append("is_open", true);
+
+        if (fundraiser.image) formData.append("image", fundraiser.image);
+
+        postFundraiser(formData)
+            .then(() => navigate("/"))
+            .catch(err => console.error(err));
     };
 
+    const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        setFundraiser({ ...fundraiser, image: file });
+        console.log("Selected image file:", file);
+    }
+    };
+
+// on submit vs onclick are js events( listeners.)
     return (
         <form className="fundraiser-form" onSubmit={handleSubmit}>
         <div className="field">
@@ -70,8 +81,8 @@ function FundraiserForm() {
             <input type="number" name="goal" id="goal" className="input" value={fundraiser.goal} placeholder="Enter goal" inputMode="numeric" onChange={handleChange} required min="10"/>
         </div>
         <div className="field">
-            <label htmlFor="image">Image URL:</label>
-            <input type="url" name="image" id="image" className="input"  value={fundraiser.image} placeholder="Enter image URL" onChange={handleChange} required />
+            <label htmlFor="image">Image upload</label>
+            <input type="file" name="image" id="image" className="input" accept="image/*" onChange={handleImageChange} />
         </div>
         <div className="field">
             <label htmlFor="genre_type">Genre type:</label>
@@ -82,10 +93,10 @@ function FundraiserForm() {
                 <option value="crime">Crime</option>
                 <option value="thriller">Thriller</option>
                 <option value="fantasy">Fantasy</option>
-                <option value="sci-fi">Sci-Fi</option>
-                <option value="young adult">Young Adult</option>
+                <option value="scifi">Sci-Fi</option>
+                <option value="youngadult">Young Adult</option>
                 <option value="children">Children</option>
-                <option value="self-help">Self-Help</option>
+                <option value="selfhelp">Self-Help</option>
                 <option value="biography">Biography</option>
                 <option value="history">History</option>
                 <option value="knowledge">Knowledge</option>

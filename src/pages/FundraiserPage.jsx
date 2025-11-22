@@ -19,6 +19,8 @@ function FundraiserPage() {
     const [commentText, setCommentText] = useState(""); // Stores the current comment text input
     const [comments, setComments] = useState([]); // Stores all comments related to the fundraiser
     const { fundraiser, isLoading, error } = useFundraiser(id); // Fetches fundraiser details and loading/error states
+    console.log("fundraiser.image:", fundraiser?.image);
+
     const [showPledgeForm, setShowPledgeForm] = useState(false); // Controls whether the pledge form is visible
     const [isDeleting, setIsDeleting] = useState(false); // Tracks if a delete request is in progress
 
@@ -226,7 +228,10 @@ return (
     <div className="fundraiser-page">
         <div className="fundraiser-details">
             <div className="top-side">
-                <div className="fundraiser-image"><img src={fundraiser.image} alt={fundraiser.title} /></div>
+                {/* <div className="fundraiser-image-wrapper"> {fundraiser.image ? (
+                    <img src={fundraiser.image}  alt={fundraiser.title} className="fundraiser-image"/>) : (
+                    <div className="no-image">No image available</div>)}
+                </div> */}
                 <div className="right-side">
                     <p><strong>Title:</strong> {fundraiser.title}</p>
                     <p><strong>Genre:</strong> {fundraiser.genre_type}</p>

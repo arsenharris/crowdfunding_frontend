@@ -13,7 +13,6 @@ function FundraiserCard(props) {
             <Link to={fundraiserLink} className="fundraiser-link">
                 <h3 className="title">{fundraiserData.title}</h3>
                 <div className="fundraiser-image-wrapper">
-                    <img src={fundraiserData.image} alt={fundraiserData.title} className="fundraiser-image" />
                 </div>
                 <div className="fundraiser-info">
                     <div className="meta-row">
